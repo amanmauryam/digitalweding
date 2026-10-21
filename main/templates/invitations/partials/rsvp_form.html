@@ -1,0 +1,14 @@
+{% load dw_tags %}
+<form hx-post="{% url 'invitations:rsvp_create' event.slug %}"
+      hx-target="#rsvp-result"
+      hx-swap="innerHTML"
+      class="mt-3 space-y-3">
+  {% csrf_token %}
+  {% for field in form %}
+    {% include "invitations/partials/form_field.html" with field=field %}
+  {% endfor %}
+  <button type="submit" class="dw-btn dw-btn-primary dw-btn-block">{% t "rsvp_submit" %}</button>
+  <p class="text-center text-xs opacity-60">
+    {% t "invite_you_are_invited" %} {{ event.event_title }}
+  </p>
+</form>

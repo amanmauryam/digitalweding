@@ -1,0 +1,11 @@
+{% load dw_tags %}
+<form hx-post="{% url 'invitations:lead_create' %}"
+      hx-target="#lead-box"
+      hx-swap="innerHTML"
+      class="mt-4 space-y-3">
+  {% csrf_token %}
+  {% for field in form %}
+    {% include "invitations/partials/form_field.html" with field=field %}
+  {% endfor %}
+  <button type="submit" class="dw-btn dw-btn-primary dw-btn-block">{% t "lead_submit" %}</button>
+</form>

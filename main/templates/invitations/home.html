@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dw_tags %}
+
+{% block title %}DigitalWedding · {% t "hero_title" %}{% endblock %}
+{% block description %}{% t "hero_subtitle" %}{% endblock %}
+
+{% block content %}
+<!-- ============================== Hero ============================== -->
+<section class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
+    <svg class="absolute -left-10 top-10 h-72 w-72 text-terracotta" viewBox="0 0 120 120"><use href="#mandala"></use></svg>
+    <svg class="absolute right-0 top-40 h-80 w-80 text-peacock" viewBox="0 0 120 120"><use href="#mandala"></use></svg>
+    <svg class="absolute bottom-0 left-1/3 h-56 w-56 text-ochre" viewBox="0 0 120 120"><use href="#mandala"></use></svg>
+  </div>
+
+  <div class="relative mx-auto grid max-w-6xl gap-8 px-3 py-10 sm:px-4 sm:py-12 md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:py-16">
+    <div>
+      <p class="dw-eyebrow text-sindoor">{% t "hero_kicker" %}</p>
+      <h1 class="dw-display mt-3 text-3xl leading-tight text-sindoor sm:text-4xl lg:text-5xl">{% t "hero_title" %}</h1>
+      <p class="mt-4 max-w-xl text-base opacity-85 sm:text-lg">{% t "hero_subtitle" %}</p>
+
+      <div class="mt-7 flex flex-col gap-3 xs:flex-row xs:flex-wrap sm:flex-row sm:flex-wrap">
+        {% if user.is_authenticated %}
+          <a href="{% url 'invitations:event_create' %}" class="dw-btn dw-btn-primary">{% t "nav_new_invitation" %}</a>
+        {% else %}
+          <a href="{% url 'accounts:signup' %}" class="dw-btn dw-btn-primary">{% t "hero_cta_primary" %}</a>
+          <a href="{% url 'accounts:login' %}" class="dw-btn dw-btn-outline">{% t "nav_login" %}</a>
+        {% endif %}
+      </div>
+
+      <dl class="mt-9 grid max-w-lg grid-cols-3 gap-2 text-center sm:gap-4">
+        <div class="dw-card px-2 py-3 sm:px-3 sm:py-4">
+          <dt class="dw-eyebrow">{% t "stat_families" %}</dt>
+          <dd class="dw-stat">12k+</dd>
+        </div>
+        <div class="dw-card px-2 py-3 sm:px-3 sm:py-4">
+          <dt class="dw-eyebrow">{% t "stat_rituals" %}</dt>
+          <dd class="dw-stat">40k+</dd>
+        </div>
+        <div class="dw-card px-2 py-3 sm:px-3 sm:py-4">
+          <dt class="dw-eyebrow">{% t "stat_districts" %}</dt>
+          <dd class="dw-stat">38</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Live customizer preview -->
+    <div class="dw-card shadow-madhubani">
+      <div class="dw-card-inner">
+        <p class="dw-eyebrow text-center">DigitalWedding · Live Customizer</p>
+        <div class="mt-4 rounded-lg border border-ochre/50 bg-parchment/60 p-4 text-center sm:p-5">
+          <svg class="mx-auto h-14 w-14 text-sindoor sm:h-16 sm:w-16" viewBox="0 0 96 96"><use href="#peacock"></use></svg>
+          <p class="dw-display mt-2 text-xl text-sindoor sm:text-2xl">अमन व प्रिया</p>
+          <p class="mt-1 text-xs opacity-75 sm:text-sm">18 फ़रवरी 2026 · मौर्या होटल, पटना</p>
+          <div class="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+            <span class="dw-pill text-sindoor">तिलकोत्सव</span>
+            <span class="dw-pill text-terracotta">माटकोर</span>
+            <span class="dw-pill text-genda">हल्दी</span>
+            <span class="dw-pill text-crimson">द्वार पूजा</span>
+            <span class="dw-pill text-gold">जयमाला</span>
+            <span class="dw-pill text-peacock">कोहबर</span>
+            <span class="dw-pill text-imperial">प्रीतिभोज</span>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center justify-center gap-2 text-xs opacity-70">
+          <svg class="h-4 w-4" viewBox="0 0 24 24"><use href="#lotus"></use></svg>
+          <span>Live · बिना डाउनलोड · बिल्कुल मुफ़्त</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ Features ============================ -->
+<section class="mx-auto max-w-6xl px-3 py-10 sm:px-4">
+  <div class="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+    {% for icon, title_key, desc_key in features %}
+      <div class="dw-card p-4 sm:p-5">
+        <svg class="h-9 w-9 text-sindoor sm:h-10 sm:w-10" viewBox="0 0 64 64"><use href="#{{ icon }}"></use></svg>
+        <h3 class="dw-display mt-3 text-lg text-sindoor">{% t title_key %}</h3>
+        <p class="mt-1 text-sm opacity-80">{% t desc_key %}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ============================ Rituals ============================= -->
+<section class="mx-auto max-w-6xl px-3 py-6 sm:px-4">
+  <h2 class="dw-roman text-center text-lg text-sindoor sm:text-xl">{% t "functions_title" %}</h2>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {% for code, data in functions.items %}
+      <div class="dw-function-card" style="--accent: {{ data.accent }}">
+        <p class="dw-function-name" style="color: {{ data.accent }}">{{ data.devanagari }}</p>
+        <p class="text-sm opacity-80">{{ data.bihari_name }}</p>
+        <p class="mt-2 text-xs italic opacity-70">{{ data.blurb.hi }}</p>
+        <p class="mt-2 text-xs opacity-60">🎵 {{ data.folk_music }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- =========================== Lead capture ========================== -->
+<section class="mx-auto max-w-3xl px-3 py-10 sm:px-4 sm:py-12">
+  <div class="dw-card">
+    <div class="dw-card-inner text-center">
+      <svg class="mx-auto h-12 w-12 text-terracotta sm:h-14 sm:w-14" viewBox="0 0 64 96"><use href="#kalash"></use></svg>
+      <h2 class="dw-display mt-3 text-xl text-sindoor sm:text-2xl">{% t "lead_title" %}</h2>
+      <p class="mt-2 text-sm opacity-85">{% t "lead_body" %}</p>
+      <div id="lead-box" class="mx-auto max-w-md text-left">
+        {% include "invitations/partials/lead_form.html" %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load dw_tags %}
+
+{% block title %}{% t "dashboard_title" %} · DigitalWedding{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-6xl px-3 py-6 sm:px-4 sm:py-8">
+  <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+    <div>
+      <p class="dw-eyebrow text-sindoor">DigitalWedding</p>
+      <h1 class="dw-display mt-1 text-2xl text-sindoor sm:text-3xl">{% t "dashboard_title" %}</h1>
+    </div>
+    <a href="{% url 'invitations:event_create' %}" class="dw-btn dw-btn-primary">{% t "nav_new_invitation" %}</a>
+  </div>
+
+  <dl class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+    <div class="dw-card px-3 py-3 text-center sm:px-4">
+      <dt class="dw-eyebrow">{% t "dashboard_views" %}</dt>
+      <dd class="dw-stat">{{ totals.views }}</dd>
+    </div>
+    <div class="dw-card px-3 py-3 text-center sm:px-4">
+      <dt class="dw-eyebrow">{% t "dashboard_rsvps" %}</dt>
+      <dd class="dw-stat">{{ totals.rsvps }}</dd>
+    </div>
+    <div class="dw-card px-3 py-3 text-center sm:px-4">
+      <dt class="dw-eyebrow">{% t "guest_count_label" %}</dt>
+      <dd class="dw-stat">{{ totals.guests }}</dd>
+    </div>
+    <div class="dw-card px-3 py-3 text-center sm:px-4">
+      <dt class="dw-eyebrow">{% t "dashboard_leads" %}</dt>
+      <dd class="dw-stat">{{ totals.events }}</dd>
+    </div>
+  </dl>
+
+  {% if not events %}
+    <div class="dw-card mt-8 p-8 text-center sm:p-10">
+      <svg class="mx-auto h-14 w-14 text-ochre sm:h-16 sm:w-16" viewBox="0 0 64 64"><use href="#lotus"></use></svg>
+      <p class="mt-3 opacity-80">{% t "dashboard_empty" %}</p>
+      <a href="{% url 'invitations:event_create' %}" class="dw-btn dw-btn-primary mt-5">{% t "hero_cta_primary" %}</a>
+    </div>
+  {% else %}
+    <div class="mt-8 grid gap-4 sm:gap-5 md:grid-cols-2">
+      {% for event in events %}
+        <article class="dw-card p-4 sm:p-5">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div class="min-w-0">
+              <h2 class="dw-display text-lg text-sindoor sm:text-xl">{{ event.event_title }}</h2>
+              <p class="text-xs opacity-75 sm:text-sm">{{ event.wedding_date|date:"d M Y" }} · {{ event.native_place|default:"" }}</p>
+            </div>
+            <span class="dw-pill {% if event.is_published %}text-peacock-dark{% else %}text-terracotta{% endif %}">
+              {% if event.is_published %}{% t "dashboard_published" %}{% else %}{% t "dashboard_draft" %}{% endif %}
+            </span>
+          </div>
+
+          <dl class="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
+            <div class="rounded-lg bg-parchment/70 py-2">
+              <dt class="dw-eyebrow">{% t "dashboard_views" %}</dt>
+              <dd class="dw-stat text-xl sm:text-2xl">{{ event.view_count }}</dd>
+            </div>
+            <div class="rounded-lg bg-parchment/70 py-2">
+              <dt class="dw-eyebrow">{% t "dashboard_rsvps" %}</dt>
+              <dd class="dw-stat text-xl sm:text-2xl">{{ event.total_rsvps }}</dd>
+            </div>
+            <div class="rounded-lg bg-parchment/70 py-2">
+              <dt class="dw-eyebrow">{% t "bless_title" %}</dt>
+              <dd class="dw-stat text-xl sm:text-2xl">{{ event.blessing_count }}</dd>
+            </div>
+          </dl>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="{% url 'invitations:event_preview' event.slug %}" class="dw-btn dw-btn-sm dw-btn-outline">{% t "dashboard_view_site" %}</a>
+            <a href="{% url 'invitations:event_functions' event.slug %}" class="dw-btn dw-btn-sm dw-btn-outline">{% t "functions_manage" %}</a>
+            <a href="{% url 'invitations:event_share' event.slug %}" class="dw-btn dw-btn-sm dw-btn-peacock">{% t "dashboard_share" %}</a>
+            <a href="{% url 'invitations:event_guests' event.slug %}" class="dw-btn dw-btn-sm dw-btn-outline">{% t "guest_list" %}</a>
+            <a href="{% url 'invitations:event_edit' event.slug %}" class="dw-btn dw-btn-sm dw-btn-gold">{% t "dashboard_edit" %}</a>
+            <form method="post" action="{% url 'invitations:event_delete' event.slug %}" onsubmit="return confirm('{% t "dashboard_delete" %}?')">
+              {% csrf_token %}
+              <button type="submit" class="dw-btn dw-btn-sm dw-btn-outline text-crimson">{% t "dashboard_delete" %}</button>
+            </form>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

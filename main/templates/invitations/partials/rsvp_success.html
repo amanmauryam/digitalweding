@@ -1,0 +1,12 @@
+{% load dw_tags %}
+<div class="mt-3 rounded-xl border border-peacock/40 bg-peacock/10 p-4 text-center">
+  <p class="dw-display text-lg text-peacock-dark">{% t "rsvp_success" %}</p>
+  <p class="mt-1 text-sm opacity-80">
+    {% if rsvp.guest_name %}{{ rsvp.guest_name }} · {% endif %}
+    {{ rsvp.get_attending_status_display }}
+    {% if rsvp.is_attending %} · {{ rsvp.guest_count }}{% endif %}
+  </p>
+  {% if rsvp.blessing_message %}
+    <p class="mt-2 text-sm italic">"{{ rsvp.blessing_message }}"</p>
+  {% endif %}
+</div>

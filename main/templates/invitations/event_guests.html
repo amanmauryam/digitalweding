@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load dw_tags %}
+
+{% block title %}{% t "guest_list" %} · {{ event.event_title }}{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-8">
+  <p class="dw-eyebrow text-sindoor">{{ event.event_title }}</p>
+  <h1 class="dw-display mt-1 text-2xl text-sindoor sm:text-3xl">{% t "guest_list" %}</h1>
+
+  <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <div class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display text-lg text-sindoor">{% t "dashboard_rsvps" %}</h2>
+      <div class="dw-scroll-x mt-3 -mx-1 px-1">
+        <table class="w-full min-w-[560px] text-left text-sm">
+          <thead>
+            <tr class="border-b border-ochre/40 text-xs uppercase opacity-70">
+              <th class="py-2">{% t "guest_name_label" %}</th>
+              <th class="py-2">{% t "guest_phone_label" %}</th>
+              <th class="py-2">{% t "guest_tag_label" %}</th>
+              <th class="py-2">{% t "rsvp_yes" %}</th>
+              <th class="py-2">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rsvp in rsvps %}
+              <tr class="border-b border-ochre/20">
+                <td class="py-2">{{ rsvp.guest_name }}</td>
+                <td class="py-2">{{ rsvp.guest_phone }}</td>
+                <td class="py-2">{{ rsvp.guest_family_tag|default:"—" }}</td>
+                <td class="py-2">
+                  <span class="dw-pill {% if rsvp.is_attending %}text-peacock-dark{% else %}text-crimson{% endif %}">
+                    {{ rsvp.get_attending_status_display }}
+                  </span>
+                </td>
+                <td class="py-2">{{ rsvp.guest_count }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="py-4 opacity-70">—</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display text-lg text-sindoor">{% t "bless_title" %}</h2>
+      <div class="mt-3 space-y-2">
+        {% for blessing in blessings %}
+          <div class="rounded-lg bg-parchment/70 px-3 py-2 text-sm">
+            <span class="font-semibold">{{ blessing.guest_name|default:"—" }}</span>
+            <span class="dw-pill ml-2 text-terracotta">{{ blessing.get_kind_display }}</span>
+            {% if blessing.message %}<p class="mt-1 italic opacity-75">{{ blessing.message }}</p>{% endif %}
+          </div>
+        {% empty %}
+          <p class="opacity-70">—</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <a href="{% url 'invitations:dashboard' %}" class="dw-btn dw-btn-outline mt-6">{% t "dashboard_title" %}</a>
+</section>
+{% endblock %}

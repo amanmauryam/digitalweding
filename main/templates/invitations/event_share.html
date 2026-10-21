@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load dw_tags %}
+
+{% block title %}{% t "dashboard_share" %} · {{ event.event_title }}{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl px-3 py-6 sm:px-4 sm:py-8">
+  <p class="dw-eyebrow text-sindoor">{{ event.event_title }}</p>
+  <h1 class="dw-display mt-1 text-2xl text-sindoor sm:text-3xl">{% t "dashboard_share" %}</h1>
+  <p class="mt-1 text-sm opacity-75">{% t "footer_tagline" %}</p>
+
+  <div class="dw-card mt-6 p-4 sm:p-5">
+    <div class="rounded-xl border border-ochre/40 bg-parchment/60 p-4">
+      <p class="dw-eyebrow mb-2">WhatsApp · {{ event.get_primary_language_display }}</p>
+      <pre class="whitespace-pre-wrap break-words font-body text-[0.95rem] leading-relaxed" id="wa-message">{{ whatsapp_message }}</pre>
+    </div>
+
+    <div class="mt-4 flex flex-col gap-3 xs:flex-row xs:flex-wrap sm:flex-row sm:flex-wrap sm:items-center">
+      <a class="dw-btn dw-btn-peacock" href="{{ wa_link }}" target="_blank" rel="noopener">
+        <span aria-hidden="true">💬</span> {% t "share_whatsapp" %}
+      </a>
+      <button type="button" class="dw-btn dw-btn-outline" data-dw-copy="{{ whatsapp_message }}"
+              data-dw-copied-target="#copy-note">{% t "share_copy" %}</button>
+      <span id="copy-note" class="text-xs opacity-70" data-copied="{% t "share_copied" %}"></span>
+    </div>
+
+    <div class="mt-6">
+      <p class="dw-eyebrow mb-1">{% t "share_copy" %}</p>
+      <code class="block break-all rounded-lg bg-parchment/70 px-3 py-2 text-sm">{{ share_url }}</code>
+      <button type="button" class="dw-btn dw-btn-sm dw-btn-outline mt-2" data-dw-copy="{{ share_url }}"
+              data-dw-copied-target="#link-note">{% t "share_copy" %}</button>
+      <span id="link-note" class="ml-2 text-xs opacity-70" data-copied="{% t "share_copied" %}"></span>
+    </div>
+  </div>
+
+  <a href="{% url 'invitations:dashboard' %}" class="dw-btn dw-btn-outline mt-6">{% t "dashboard_title" %}</a>
+</section>
+{% endblock %}

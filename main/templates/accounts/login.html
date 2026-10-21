@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load dw_tags %}
+
+{% block title %}{% t "nav_login" %} · DigitalWedding{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-md px-3 py-8 sm:px-4 sm:py-12">
+  <div class="dw-card">
+    <div class="dw-card-inner">
+      <h1 class="dw-display text-center text-xl text-sindoor sm:text-2xl">{% t "nav_login" %}</h1>
+
+      {% if form.errors %}
+        <div class="dw-alert dw-alert-error mt-4">{% t "rsvp_error" %}</div>
+      {% endif %}
+
+      <form method="post" class="mt-5 space-y-3">
+        {% csrf_token %}
+        <div>
+          <label class="dw-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+          {{ form.username }}
+        </div>
+        <div>
+          <label class="dw-label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          {{ form.password }}
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="dw-btn dw-btn-primary dw-btn-block">{% t "nav_login" %}</button>
+      </form>
+
+      <p class="mt-4 text-center text-sm opacity-80">
+        <a class="underline" href="{% url 'accounts:signup' %}">{% t "nav_signup" %}</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

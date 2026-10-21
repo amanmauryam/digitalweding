@@ -1,0 +1,16 @@
+{
+  "name": "digitalwedding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DigitalWedding — Bihar-centric digital wedding invitation platform",
+  "scripts": {
+    "build": "tailwindcss -i ./src/styles/app.css -o ./static/css/app.css --minify",
+    "build:dev": "tailwindcss -i ./src/styles/app.css -o ./static/css/app.css",
+    "dev": "tailwindcss -i ./src/styles/app.css -o ./static/css/app.css --watch",
+    "watch": "npm run dev"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

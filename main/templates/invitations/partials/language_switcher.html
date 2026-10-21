@@ -1,0 +1,14 @@
+{% load dw_tags %}
+{% comment %}One-tap dialect switcher — works without JavaScript.{% endcomment %}
+<form method="post" action="{% url 'invitations:set_language' %}" class="dw-langbar">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <span class="dw-langbar-label">{% t "language_label" %}</span>
+  {% for lang in dw_lang_meta %}
+    <button type="submit"
+            name="lang"
+            value="{{ lang.code }}"
+            class="dw-langbar-btn {% if lang.code == dw_lang %}is-active{% endif %}"
+            title="{{ lang.english }}">{{ lang.label }}</button>
+  {% endfor %}
+</form>

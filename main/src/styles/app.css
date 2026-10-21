@@ -1,0 +1,828 @@
+/* ==========================================================================
+   DigitalWedding — Tailwind CSS v4 entry point
+   Bihari cultural palette (design.md §2)
+   Sindoor Red · Genda Gold · Mithila Ochre · Peacock Teal · Clay Terracotta
+
+   Build:  npm run build      (minified → static/css/app.css)
+   Watch:  npm run dev        (rebuilds on every template change)
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* Scan the Django templates (and anything else that may hold class names). */
+@source "../../templates";
+@source "../../templates/**/*.html";
+@source "../../accounts";
+@source "../../invitations";
+
+/* --------------------------------------------------------------------------
+   Design tokens — mirrored by the palette in invitations/bihari.py
+   -------------------------------------------------------------------------- */
+@theme {
+  --color-sindoor: #800020;
+  --color-crimson: #b22222;
+  --color-genda: #eab308;
+  --color-gold: #d4af37;
+  --color-ochre: #c5a059;
+  --color-peacock: #0d9488;
+  --color-peacock-dark: #064e3b;
+  --color-terracotta: #9a3412;
+  --color-imperial: #1e3a8a;
+  --color-parchment: #fbf1dc;
+  --color-kalam: #2b1a12;
+
+  --font-display: "Rozha One", "Yatra One", serif;
+  --font-body: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+  --font-latin: "Playfair Display", Georgia, serif;
+  --font-roman: Cinzel, Georgia, serif;
+
+  --shadow-madhubani: 0 10px 40px -12px rgb(128 0 32 / 0.35);
+
+  /* Small-phone breakpoint (iPhone SE and friends) */
+  --breakpoint-xs: 26rem;
+}
+
+/* --------------------------------------------------------------------------
+   Base layer — page frame, paper texture, typography defaults
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --dw-sindoor: #800020;
+    --dw-crimson: #b22222;
+    --dw-genda: #eab308;
+    --dw-gold: #d4af37;
+    --dw-ochre: #c5a059;
+    --dw-peacock: #0d9488;
+    --dw-peacock-dark: #064e3b;
+    --dw-terracotta: #9a3412;
+    --dw-imperial: #1e3a8a;
+    --dw-parchment: #fbf1dc;
+    --dw-kalam: #2b1a12;
+
+    --dw-primary: var(--dw-sindoor);
+    --dw-secondary: var(--dw-ochre);
+    --dw-accent: var(--dw-peacock);
+    --dw-background: var(--dw-parchment);
+
+    --dw-radius: 18px;
+    --dw-shadow: 0 10px 40px -12px rgb(128 0 32 / 0.35);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Alpine hides x-cloak elements only once JavaScript is running. */
+  .js [x-cloak] {
+    display: none !important;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--dw-background);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgb(197 160 89 / 0.18), transparent 42%),
+      radial-gradient(circle at 88% 8%, rgb(13 148 136 / 0.12), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgb(212 175 55 / 0.14), transparent 45%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* Paper grain ------------------------------------------------------- */
+  .dw-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image:
+      repeating-linear-gradient(45deg, rgb(43 26 18 / 0.025) 0 2px, transparent 2px 5px),
+      repeating-linear-gradient(-45deg, rgb(43 26 18 / 0.02) 0 2px, transparent 2px 6px);
+  }
+
+  main,
+  header,
+  footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Never let a long word (URL, name) break the layout on small screens */
+  h1,
+  h2,
+  h3,
+  p,
+  dd,
+  dt,
+  li {
+    overflow-wrap: break-word;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Component layer — the DigitalWedding design system
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* Top bar ----------------------------------------------------------- */
+  .dw-topbar {
+    background: linear-gradient(90deg, var(--dw-sindoor), #5c0018 60%, #3b0010);
+    color: var(--dw-parchment);
+    box-shadow: 0 2px 18px rgb(43 26 18 / 0.35);
+  }
+
+  /* Hamburger + drawer navigation (phones and tablets) -------------------- */
+  .dw-nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex: none;
+    border-radius: 0.7rem;
+    border: 1px solid rgb(251 241 220 / 0.38);
+    background: rgb(251 241 220 / 0.16);
+    color: #fff;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .dw-nav-toggle:hover {
+    background: rgb(251 241 220 / 0.3);
+  }
+  .dw-nav-toggle:active {
+    transform: scale(0.94);
+  }
+  .js .dw-nav-toggle {
+    display: inline-flex;
+  }
+  .dw-nav-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .dw-mobilenav {
+    background: rgb(43 0 16 / 0.98);
+    max-height: min(78vh, 34rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: 0 14px 34px rgb(43 26 18 / 0.45);
+  }
+  .dw-mobilelink {
+    display: block;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+    color: rgb(251 241 220 / 0.95);
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .dw-mobilelink:hover,
+  .dw-mobilelink:focus-visible {
+    background: rgb(251 241 220 / 0.16);
+    color: #fff;
+  }
+  .dw-mobilenav .dw-langbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+  .dw-mobilenav .dw-langbar-label {
+    display: none;
+  }
+  .dw-mobilenav .dw-langbar-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .dw-langchip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: none;
+    padding: 0.42rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgb(251 241 220 / 0.38);
+    background: rgb(251 241 220 / 0.16);
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .dw-langchip-icon {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+  }
+
+  .dw-toplink {
+    color: rgb(251 241 220 / 0.9);
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .dw-toplink:hover {
+    background: rgb(251 241 220 / 0.16);
+    color: #fff;
+  }
+
+  .dw-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .dw-logo-mark {
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--dw-gold);
+    flex: none;
+  }
+  .dw-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+  }
+  .dw-logo-name {
+    font-family: "Cinzel", Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dw-logo-tag {
+    font-size: 0.68rem;
+    opacity: 0.85;
+    font-family: "Tiro Devanagari Hindi", serif;
+  }
+
+  .dw-footer-title {
+    font-family: "Yatra One", "Rozha One", serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+  .dw-footer-link {
+    opacity: 0.9;
+  }
+  .dw-footer-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  /* Dialect switcher --------------------------------------------------- */
+  .dw-langbar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgb(251 241 220 / 0.12);
+    border: 1px solid rgb(251 241 220 / 0.28);
+    border-radius: 999px;
+    padding: 0.15rem 0.4rem;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .dw-langbar::-webkit-scrollbar {
+    display: none;
+  }
+  .dw-langbar-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    padding: 0 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .dw-langbar-btn {
+    font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+    font-size: 0.78rem;
+    line-height: 1;
+    padding: 0.32rem 0.55rem;
+    border-radius: 999px;
+    color: rgb(251 241 220 / 0.92);
+    white-space: nowrap;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease,
+      transform 0.18s ease;
+  }
+  .dw-langbar-btn:hover {
+    background: rgb(251 241 220 / 0.2);
+  }
+  .dw-langbar-btn.is-active {
+    background: var(--dw-gold);
+    color: var(--dw-kalam);
+    font-weight: 600;
+  }
+
+  /* Alerts -------------------------------------------------------------- */
+  .dw-alert {
+    border-radius: 999px;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.9rem;
+    border: 1px solid rgb(43 26 18 / 0.12);
+    background: #fffdf6;
+    box-shadow: var(--dw-shadow);
+  }
+  .dw-alert-success {
+    background: #e8f6ef;
+    border-color: rgb(6 78 59 / 0.25);
+    color: #064e3b;
+  }
+  .dw-alert-error {
+    background: #fdeaea;
+    border-color: rgb(178 34 34 / 0.3);
+    color: #7f1d1d;
+  }
+  .dw-alert-warning {
+    background: #fdf6e3;
+    border-color: rgb(212 175 55 / 0.4);
+    color: #7c5b12;
+  }
+  .dw-alert-info {
+    background: #eef4fb;
+    border-color: rgb(30 58 138 / 0.25);
+    color: #1e3a8a;
+  }
+
+  /* Buttons ------------------------------------------------------------- */
+  .dw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 0.65rem 1.35rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+    font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .dw-btn:active {
+    transform: translateY(1px);
+  }
+  .dw-btn-primary {
+    background: linear-gradient(135deg, var(--dw-sindoor), #a00029);
+    color: var(--dw-parchment);
+    box-shadow: 0 8px 24px -10px rgb(128 0 32 / 0.9);
+  }
+  .dw-btn-primary:hover {
+    box-shadow: 0 12px 30px -10px rgb(128 0 32 / 0.95);
+  }
+  .dw-btn-gold {
+    background: linear-gradient(135deg, var(--dw-gold), #b28f22);
+    color: var(--dw-kalam);
+    box-shadow: 0 8px 24px -12px rgb(212 175 55 / 0.9);
+  }
+  .dw-btn-outline {
+    background: transparent;
+    color: var(--dw-sindoor);
+    border-color: rgb(128 0 32 / 0.45);
+  }
+  .dw-btn-outline:hover {
+    background: rgb(128 0 32 / 0.08);
+  }
+  .dw-btn-peacock {
+    background: linear-gradient(135deg, var(--dw-peacock), var(--dw-peacock-dark));
+    color: #f0fdfa;
+  }
+  .dw-btn-sm {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+  }
+  .dw-btn-block {
+    width: 100%;
+  }
+
+  /* Cards & Madhubani borders ------------------------------------------- */
+  .dw-card {
+    background: rgb(255 253 246 / 0.94);
+    border-radius: var(--dw-radius);
+    border: 1px solid rgb(197 160 89 / 0.45);
+    box-shadow: var(--dw-shadow);
+    position: relative;
+  }
+  .dw-card-inner {
+    border: 2px solid rgb(128 0 32 / 0.16);
+    border-radius: 12px;
+    padding: 1.75rem;
+    background:
+      repeating-linear-gradient(45deg, rgb(197 160 89 / 0.05) 0 3px, transparent 3px 9px),
+      #fffdf6;
+  }
+  .dw-corner {
+    position: absolute;
+    width: 3.2rem;
+    height: 3.2rem;
+    color: var(--dw-ochre);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .dw-corner-tl {
+    top: -1px;
+    left: -1px;
+  }
+  .dw-corner-tr {
+    top: -1px;
+    right: -1px;
+    transform: scaleX(-1);
+  }
+  .dw-corner-bl {
+    bottom: -1px;
+    left: -1px;
+    transform: scaleY(-1);
+  }
+  .dw-corner-br {
+    bottom: -1px;
+    right: -1px;
+    transform: scale(-1);
+  }
+
+  /* Typography ---------------------------------------------------------- */
+  .dw-display {
+    font-family: "Rozha One", "Yatra One", serif;
+    letter-spacing: 0.01em;
+  }
+  .dw-roman {
+    font-family: Cinzel, "Playfair Display", serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .dw-latin {
+    font-family: "Playfair Display", Georgia, serif;
+  }
+  .dw-shloka {
+    font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--dw-sindoor);
+    text-align: center;
+  }
+  .dw-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  /* Forms ---------------------------------------------------------------- */
+  .dw-input,
+  .dw-select,
+  .dw-textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgb(43 26 18 / 0.2);
+    background: #fffdf6;
+    padding: 0.6rem 0.85rem;
+    font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+    font-size: 1rem;
+    color: var(--dw-kalam);
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  .dw-input:focus,
+  .dw-select:focus,
+  .dw-textarea:focus {
+    outline: none;
+    border-color: var(--dw-sindoor);
+    box-shadow: 0 0 0 3px rgb(128 0 32 / 0.12);
+  }
+  .dw-label {
+    display: block;
+    font-size: 0.82rem;
+    margin-bottom: 0.3rem;
+    opacity: 0.85;
+  }
+  .dw-help {
+    font-size: 0.78rem;
+    opacity: 0.7;
+  }
+  .dw-errorlist {
+    color: #7f1d1d;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+  .dw-checkbox {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--dw-sindoor);
+  }
+
+  /* Unstyled (Django auth) fields inside a card get the same treatment */
+  .dw-card-inner input[type="text"],
+  .dw-card-inner input[type="password"],
+  .dw-card-inner input[type="email"],
+  .dw-card-inner input[type="tel"],
+  .dw-card-inner input[type="number"],
+  .dw-card-inner input[type="url"],
+  .dw-card-inner input[type="date"],
+  .dw-card-inner input[type="datetime-local"],
+  .dw-card-inner select,
+  .dw-card-inner textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgb(43 26 18 / 0.2);
+    background: #fffdf6;
+    padding: 0.6rem 0.85rem;
+    font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+    font-size: 1rem;
+    color: var(--dw-kalam);
+  }
+  .dw-card-inner input:focus,
+  .dw-card-inner select:focus,
+  .dw-card-inner textarea:focus {
+    outline: none;
+    border-color: var(--dw-sindoor);
+    box-shadow: 0 0 0 3px rgb(128 0 32 / 0.12);
+  }
+
+  /* Kohbar door ---------------------------------------------------------- */
+  .dw-door {
+    width: 100%;
+    max-width: min(320px, 78vw);
+    margin: 0 auto;
+    color: var(--dw-terracotta);
+    cursor: pointer;
+    transition:
+      transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+      filter 0.4s ease;
+    filter: drop-shadow(0 18px 26px rgb(43 26 18 / 0.35));
+  }
+  .dw-door:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+  .dw-door-leaf {
+    transform-origin: 50% 0%;
+    transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dw-door.is-open {
+    filter: drop-shadow(0 6px 16px rgb(43 26 18 / 0.25));
+  }
+  .dw-door.is-open .dw-door-leaf {
+    transform: perspective(600px) rotateY(-78deg);
+  }
+  .dw-door-glow {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .dw-door.is-open .dw-door-glow {
+    opacity: 1;
+  }
+  .dw-door-hint {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  /* Blessing badge (Paan / Laddoo) --------------------------------------- */
+  .dw-bless-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--dw-genda), var(--dw-gold));
+    color: var(--dw-kalam);
+    box-shadow: 0 12px 30px -10px rgb(234 179 8 / 0.9);
+    font-weight: 700;
+    font-family: "Tiro Devanagari Hindi", serif;
+  }
+  .dw-bless-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .dw-bless-fly {
+    position: fixed;
+    right: 1.6rem;
+    bottom: 4.2rem;
+    z-index: 45;
+    pointer-events: none;
+    animation: dw-fly 1.6s cubic-bezier(0.3, 0.8, 0.4, 1) forwards;
+  }
+  .dw-bless-fly svg {
+    width: 2.6rem;
+    height: 2.6rem;
+    color: var(--dw-genda);
+  }
+  @keyframes dw-fly {
+    0% {
+      transform: translate(0, 0) scale(0.4) rotate(-20deg);
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-140px, -180px) scale(1.2) rotate(12deg);
+      opacity: 0;
+    }
+  }
+
+  /* Ritual timeline ------------------------------------------------------ */
+  .dw-timeline {
+    position: relative;
+  }
+  .dw-timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.85rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: linear-gradient(var(--dw-gold), rgb(212 175 55 / 0.15));
+  }
+  .dw-timeline-item {
+    position: relative;
+    padding-left: 2.4rem;
+    padding-bottom: 1.4rem;
+  }
+  .dw-timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: #fffdf6;
+    background: var(--accent, var(--dw-sindoor));
+    border: 2px solid rgb(255 253 246 / 0.85);
+    box-shadow: 0 6px 14px -6px rgb(43 26 18 / 0.6);
+  }
+  .dw-timeline-dot svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .dw-function-card {
+    background: #fffdf6;
+    border-radius: 14px;
+    border: 1px solid rgb(197 160 89 / 0.45);
+    border-left: 5px solid var(--accent, var(--dw-sindoor));
+    padding: 0.9rem 1.05rem;
+    box-shadow: 0 8px 20px -14px rgb(43 26 18 / 0.55);
+  }
+  .dw-function-name {
+    font-family: "Yatra One", "Rozha One", serif;
+    font-size: 1.05rem;
+  }
+  .dw-function-meta {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  /* Music toggle ---------------------------------------------------------- */
+  .dw-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 999px;
+    border: 1px solid rgb(128 0 32 / 0.35);
+    background: rgb(255 253 246 / 0.9);
+    color: var(--dw-sindoor);
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-family: "Tiro Devanagari Hindi", serif;
+  }
+
+  /* Misc ----------------------------------------------------------------- */
+  .dw-ornament {
+    color: var(--dw-gold);
+  }
+  .dw-scroll-x {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dw-stat {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.9rem;
+    color: var(--dw-sindoor);
+    line-height: 1.1;
+  }
+  .dw-pill {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    border: 1px solid currentColor;
+  }
+  .dw-fade-in {
+    animation: dw-fade-in 0.6s ease both;
+  }
+  @keyframes dw-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive refinements — phone first, then tablet and laptop
+   -------------------------------------------------------------------------- */
+@media (max-width: 639px) {
+  .dw-card-inner {
+    padding: 1.1rem;
+  }
+  .dw-corner {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  .dw-stat {
+    font-size: 1.45rem;
+  }
+  .dw-shloka {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .dw-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+  }
+  .dw-timeline-item {
+    padding-left: 2rem;
+    padding-bottom: 1.1rem;
+  }
+  .dw-function-card {
+    padding: 0.75rem 0.85rem;
+  }
+  .dw-alert {
+    border-radius: 14px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+  }
+  .dw-btn {
+    padding: 0.75rem 1.1rem;
+  }
+  .dw-btn-sm {
+    padding: 0.55rem 0.85rem;
+  }
+  .dw-bless-btn {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+  }
+  .dw-bless-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .dw-logo-tag {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .dw-card-inner {
+    padding: 1.35rem;
+  }
+  .dw-stat {
+    font-size: 1.7rem;
+  }
+}
+
+/* From the laptop breakpoint upwards the full navigation bar is shown, so the
+   hamburger button is no longer needed. */
+@media (min-width: 64rem) {
+  .js .dw-nav-toggle {
+    display: none;
+  }
+}

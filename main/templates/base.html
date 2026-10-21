@@ -1,0 +1,148 @@
+{% load static %}<!DOCTYPE html>
+{% load dw_tags %}
+<html lang="{{ dw_lang }}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#800020">
+  <title>{% block title %}DigitalWedding{% endblock %}</title>
+  <meta name="description" content="{% block description %}बिहार के परंपरा और आधुनिकता का सुंदर मिलन — डिजिटल निमंत्रण।{% endblock %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{{ dw_google_fonts }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="{% static 'js/main.js' %}" defer></script>
+</head>
+<body class="bg-parchment text-kalam font-body antialiased">
+
+  <div class="dw-grain" aria-hidden="true"></div>
+  {% include "invitations/partials/madhubani_sprite.html" %}
+
+  {% block topbar %}
+  <header class="dw-topbar sticky top-0 z-50" x-data="{ open: false }" @keydown.escape.window="open = false">
+    <div class="mx-auto flex max-w-6xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-4 sm:py-2.5">
+      <button type="button"
+              class="dw-nav-toggle"
+              @click="open = !open"
+              :aria-expanded="open ? 'true' : 'false'"
+              aria-controls="dw-mobile-nav"
+              aria-label="{% t 'nav_menu' %}">
+        <svg x-show="!open" class="dw-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        <svg x-show="open" x-cloak class="dw-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+
+      <a href="{% url 'invitations:home' %}" class="flex min-w-0 flex-1 items-center gap-2">
+        {% include "invitations/partials/logo.html" %}
+      </a>
+
+      <div class="hidden sm:block">
+        {% include "invitations/partials/language_switcher.html" %}
+      </div>
+
+      <button type="button" class="dw-langchip sm:hidden" @click="open = true"
+              aria-label="{% t 'language_label' %}">
+        <svg class="dw-langchip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"></path>
+        </svg>
+        <span>{% for lang in dw_lang_meta %}{% if lang.code == dw_lang %}{{ lang.label }}{% endif %}{% endfor %}</span>
+      </button>
+    </div>
+
+    <nav class="hidden border-t border-parchment/20 lg:block" aria-label="{% t 'nav_menu' %}">
+      <div class="mx-auto flex max-w-6xl items-center gap-1 px-3 py-1.5 text-sm sm:gap-2 sm:px-4">
+        <a href="{% url 'invitations:home' %}" class="dw-toplink whitespace-nowrap">{% t "nav_home" %}</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'invitations:dashboard' %}" class="dw-toplink whitespace-nowrap">{% t "nav_my_events" %}</a>
+          <a href="{% url 'invitations:event_create' %}" class="dw-toplink whitespace-nowrap">{% t "nav_new_invitation" %}</a>
+          <a href="{% url 'accounts:logout' %}" class="dw-toplink whitespace-nowrap">{% t "nav_logout" %}</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="dw-toplink whitespace-nowrap">{% t "nav_login" %}</a>
+          <a href="{% url 'accounts:signup' %}" class="dw-toplink whitespace-nowrap">{% t "nav_signup" %}</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <div id="dw-mobile-nav"
+         class="dw-mobilenav border-t border-parchment/20 lg:hidden"
+         x-show="open"
+         x-cloak
+         x-transition.opacity.duration.150ms>
+      <nav class="mx-auto flex max-w-6xl flex-col gap-0.5 px-2.5 py-2.5 sm:px-4" aria-label="{% t 'nav_menu' %}">
+        <a href="{% url 'invitations:home' %}" class="dw-mobilelink" @click="open = false">{% t "nav_home" %}</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'invitations:dashboard' %}" class="dw-mobilelink" @click="open = false">{% t "nav_my_events" %}</a>
+          <a href="{% url 'invitations:event_create' %}" class="dw-mobilelink" @click="open = false">{% t "nav_new_invitation" %}</a>
+          <a href="{% url 'accounts:logout' %}" class="dw-mobilelink" @click="open = false">{% t "nav_logout" %}</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="dw-mobilelink" @click="open = false">{% t "nav_login" %}</a>
+          <a href="{% url 'accounts:signup' %}" class="dw-mobilelink" @click="open = false">{% t "nav_signup" %}</a>
+        {% endif %}
+      </nav>
+
+      <div class="border-t border-parchment/20 px-2.5 pb-3 pt-2.5 sm:hidden">
+        <p class="dw-langbar-label mb-1.5 px-1">{% t "language_label" %}</p>
+        {% include "invitations/partials/language_switcher.html" %}
+      </div>
+    </div>
+  </header>
+  {% endblock %}
+
+  {% if messages %}
+    <div class="mx-auto max-w-6xl px-4 pt-3">
+      {% for message in messages %}
+        <div class="dw-alert dw-alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block footer %}
+  <footer class="mt-16 border-t border-ochre/40 bg-sindoor/95 text-parchment">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-3">
+      <div class="sm:col-span-2 md:col-span-1">
+        {% include "invitations/partials/logo.html" %}
+        <p class="mt-3 max-w-sm text-sm opacity-90">{% t "footer_tagline" %}</p>
+      </div>
+      <div>
+        <h3 class="dw-footer-title">{% t "footer_dialects" %}</h3>
+        <ul class="mt-3 space-y-1 text-sm">
+          {% for lang in dw_lang_meta %}
+            <li>
+              <a class="dw-footer-link" href="?lang={{ lang.code }}">{{ lang.label }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h3 class="dw-footer-title">DigitalWedding</h3>
+        <ul class="mt-3 space-y-1 text-sm">
+          <li><a class="dw-footer-link break-all" href="https://wa.me/{{ dw_support_whatsapp|cut:'+' }}" rel="noopener">WhatsApp: {{ dw_support_whatsapp }}</a></li>
+          <li><a class="dw-footer-link break-all" href="mailto:{{ dw_support_email }}">{{ dw_support_email }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-parchment/20 px-4 py-4 text-center text-xs opacity-80">
+      © {% now "Y" %} DigitalWedding · {% t "footer_rights" %}
+    </div>
+  </footer>
+  {% endblock %}
+
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
