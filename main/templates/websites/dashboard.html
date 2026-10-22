@@ -1,10 +1,10 @@
 {% extends "websites/base_editor.html" %}
 {% load dw_tags %}
 
-{% block editor_title %}{% t "site_cta_create" %}{% endblock %}
-{% block editor_heading %}{% t "site_cta_create" %}{% endblock %}
+{% block editor_title %}{% t "site_dashboard_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_dashboard_title" %}{% endblock %}
 {% block editor_subheading %}
-  <p class="mt-1 max-w-2xl text-sm text-kalam/75">{% t "site_publish_private_note" %}</p>
+  <p class="mt-1 max-w-2xl text-sm text-kalam/75">{% t "site_dashboard_subtitle" %}</p>
 {% endblock %}
 
 {% block editor_actions %}
@@ -15,38 +15,45 @@
   {% if websites %}
     <div class="grid gap-4 sm:grid-cols-2">
       {% for item in websites %}
-        <article class="dw-card p-4">
+        <article class="dw-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
           <div class="flex items-start justify-between gap-2">
-            <h2 class="dw-display text-lg leading-snug">{{ item.display_title }}</h2>
+            <div>
+              <h2 class="dw-display text-lg leading-snug">{{ item.display_title }}</h2>
+              <p class="mt-1 text-xs text-kalam/60">{% if item.wedding_date %}{{ item.wedding_date|date:"d M Y" }}{% else %}{% t "site_missing_info" %}{% endif %} · {{ item.theme_config.name }}</p>
+            </div>
             {% if item.is_published %}
-              <span class="dw-pill dw-pill-live">{% t "site_step_publish" %}</span>
+              <span class="dw-pill dw-pill-live">{% t "site_publish_live" %}</span>
             {% else %}
               <span class="dw-pill">{% t "site_needs_review" %}</span>
             {% endif %}
           </div>
 
-          <dl class="mt-3 space-y-1 text-sm">
-            <div class="flex justify-between gap-2">
-              <dt class="text-kalam/60">{% t "site_step_details" %}</dt>
-              <dd class="text-right">
-                {% if item.wedding_date %}{{ item.wedding_date|date:"d M Y" }}{% else %}{% t "site_missing_info" %}{% endif %}
-              </dd>
+          <dl class="mt-3 grid grid-cols-3 gap-2 text-center text-sm">
+            <div class="rounded-lg bg-parchment/70 px-2 py-2">
+              <dt class="text-xs text-kalam/60">{% t "site_rsvp_responses" %}</dt>
+              <dd class="mt-0.5 font-medium">{{ item.rsvp_count }}</dd>
             </div>
-            <div class="flex justify-between gap-2">
-              <dt class="text-kalam/60">{% t "site_step_theme" %}</dt>
-              <dd class="text-right">{{ item.theme_config.name }}</dd>
+            <div class="rounded-lg bg-parchment/70 px-2 py-2">
+              <dt class="text-xs text-kalam/60">{% t "rsvp_attending" %}</dt>
+              <dd class="mt-0.5 font-medium">{{ item.attending_count }}</dd>
             </div>
-            <div class="flex justify-between gap-2">
-              <dt class="text-kalam/60">{% t "site_rsvp_responses" %}</dt>
-              <dd class="text-right">{{ item.rsvp_count }} · {{ item.attending_count }}</dd>
+            <div class="rounded-lg bg-parchment/70 px-2 py-2">
+              <dt class="text-xs text-kalam/60">{% t "site_step_events" %}</dt>
+              <dd class="mt-0.5 font-medium">{{ item.events.count }}</dd>
             </div>
           </dl>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <a class="dw-btn dw-btn-sm dw-btn-primary" href="{% url 'websites:review' slug=item.slug %}">{% t "site_save_continue" %}</a>
-            <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:preview' slug=item.slug %}">{% t "site_preview_title" %}</a>
+            <a class="dw-btn dw-btn-sm dw-btn-primary" href="{% url 'websites:review' slug=item.slug %}">{% t "site_edit_details" %}</a>
+            <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:events' slug=item.slug %}">{% t "site_step_events" %}</a>
+            <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:photos' slug=item.slug %}">{% t "site_step_photos" %}</a>
+            <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:preview' slug=item.slug %}">{% t "site_step_preview" %}</a>
             {% if item.is_published %}
+              <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:public_site' slug=item.slug %}" target="_blank" rel="noopener">{% t "site_publish_view" %}</a>
               <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:share' slug=item.slug %}">{% t "site_share_title" %}</a>
+              <a class="dw-btn dw-btn-sm dw-btn-outline" href="{% url 'websites:rsvps' slug=item.slug %}">{% t "site_rsvp_manage" %}</a>
+            {% else %}
+              <a class="dw-btn dw-btn-sm dw-btn-primary" href="{% url 'websites:publish' slug=item.slug %}">{% t "site_step_publish" %}</a>
             {% endif %}
           </div>
         </article>

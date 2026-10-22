@@ -1,12 +1,15 @@
 {% load dw_tags %}
-<nav class="dw-card p-3" aria-label="{% t 'site_cta_create' %}">
-  <p class="dw-eyebrow mb-2">{% t "site_cta_create" %}</p>
+<nav class="dw-card p-3 shadow-sm" aria-label="{% t 'site_cta_create' %}">
+  <div class="mb-2 flex items-center justify-between">
+    <p class="dw-eyebrow">{% t "site_cta_create" %}</p>
+    <a class="dw-toplink text-xs" href="{% url 'websites:dashboard' %}">{% t "site_dashboard_back" %}</a>
+  </div>
   <ol class="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1">
     {% for step in steps %}
       <li class="lg:w-full">
         <a href="{{ step.url }}"
-           class="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm {% if step.active %}bg-sindoor text-parchment{% else %}hover:bg-ochre/20{% endif %}">
-          <span class="dw-stat text-xs {% if step.active %}text-genda{% else %}text-ochre{% endif %}">{{ forloop.counter }}</span>
+           class="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition hover:bg-ochre/15 {% if step.active %}bg-sindoor text-parchment shadow-sm{% endif %}">
+          <span class="inline-flex h-6 w-6 items-center justify-center rounded-full text-xs {% if step.active %}bg-parchment/20 text-genda{% else %}bg-ochre/20 text-kalam{% endif %}">{{ forloop.counter }}</span>
           <span class="truncate">{{ step.label }}</span>
         </a>
       </li>

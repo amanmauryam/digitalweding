@@ -13,23 +13,35 @@
       {% block editor_subheading %}{% endblock %}
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      {% block editor_actions %}{% endblock %}
+      {% block editor_actions %}
+        <a class="dw-btn dw-btn-outline dw-btn-sm" href="{% url 'websites:dashboard' %}">{% t "site_dashboard_back" %}</a>
+        {% if website %}
+          <a class="dw-btn dw-btn-outline dw-btn-sm" href="{% url 'websites:preview' slug=website.slug %}">{% t "site_step_preview" %}</a>
+          {% if website.is_published %}
+            <a class="dw-btn dw-btn-outline dw-btn-sm" href="{% url 'websites:public_site' slug=website.slug %}" target="_blank" rel="noopener">{% t "site_publish_view" %}</a>
+          {% else %}
+            <a class="dw-btn dw-btn-primary dw-btn-sm" href="{% url 'websites:publish' slug=website.slug %}">{% t "site_step_publish" %}</a>
+          {% endif %}
+        {% endif %}
+      {% endblock %}
     </div>
   </header>
 
   {% if website %}
-    <div class="mb-6 flex flex-wrap items-center gap-2 rounded-lg border border-ochre/40 bg-parchment/70 px-3 py-2 text-sm">
+    <div class="mb-6 flex flex-wrap items-center gap-2 rounded-xl border border-ochre/40 bg-parchment/80 px-3 py-2 text-sm shadow-sm">
       <span class="dw-pill">{{ website.display_title }}</span>
       {% if website.is_published %}
-        <span class="dw-pill dw-pill-live">{% t "site_step_publish" %}</span>
+        <span class="dw-pill dw-pill-live">{% t "site_publish_live" %}</span>
       {% else %}
         <span class="dw-pill">{% t "site_publish_private_note" %}</span>
       {% endif %}
       <a class="dw-toplink" href="{% url 'websites:dashboard' %}">{% t "site_dashboard_back" %}</a>
+      <a class="dw-toplink" href="{% url 'websites:rsvps' slug=website.slug %}">{% t "site_rsvp_manage" %}</a>
+      <a class="dw-toplink" href="{% url 'websites:share' slug=website.slug %}">{% t "site_share_title" %}</a>
     </div>
   {% endif %}
 
-  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px]">
+  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
     <div class="min-w-0">
       {% block editor_content %}{% endblock %}
     </div>
@@ -37,6 +49,15 @@
     {% if website %}
       <aside class="order-first lg:order-none">
         {% include "websites/partials/step_nav.html" %}
+        <div class="mt-4 dw-card p-3">
+          <p class="dw-eyebrow mb-2">{% t "site_publish_shortcuts" %}</p>
+          <div class="flex flex-col gap-1.5 text-sm">
+            <a class="dw-toplink" href="{% url 'websites:preview' slug=website.slug %}">{% t "site_step_preview" %}</a>
+            <a class="dw-toplink" href="{% url 'websites:rsvps' slug=website.slug %}">{% t "site_rsvp_manage" %}</a>
+            <a class="dw-toplink" href="{% url 'websites:share' slug=website.slug %}">{% t "site_share_title" %}</a>
+            <a class="dw-toplink" href="{% url 'websites:dashboard' %}">{% t "site_dashboard_back" %}</a>
+          </div>
+        </div>
       </aside>
     {% endif %}
   </div>
