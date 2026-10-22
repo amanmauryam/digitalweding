@@ -1,0 +1,64 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_customise_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_customise_title" %}{% endblock %}
+
+{% block editor_content %}
+  <form method="post" class="dw-card space-y-5 p-4 sm:p-5">
+    {% csrf_token %}
+
+    <div>
+      <p class="dw-label">{% t "site_theme_accents" %}</p>
+      <div class="mt-2 flex flex-wrap gap-2">
+        {% for colour in accents %}
+          <label class="flex cursor-pointer items-center gap-2 rounded-md border border-ochre/40 px-2 py-1.5 text-sm">
+            <input type="radio" name="accent_color" value="{{ colour }}"
+                   class="dw-checkbox" {% if form.accent_color.value == colour %}checked{% endif %}>
+            <span class="inline-block h-4 w-4 rounded-full border border-black/20" style="background: {{ colour }};"></span>
+            <span class="dw-latin text-xs">{{ colour }}</span>
+          </label>
+        {% endfor %}
+        <label class="flex cursor-pointer items-center gap-2 rounded-md border border-ochre/40 px-2 py-1.5 text-sm">
+          <input type="radio" name="accent_color" value=""
+                 class="dw-checkbox" {% if not form.accent_color.value %}checked{% endif %}>
+          <span class="dw-latin text-xs">{% t "site_theme_selected" %}</span>
+        </label>
+      </div>
+      {% if form.accent_color.errors %}
+        <ul class="dw-errorlist">{% for error in form.accent_color.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+      {% endif %}
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2">
+      {% for field in toggles %}
+        <label class="flex items-center gap-2 text-sm" for="{{ field.id_for_label }}">
+          <input type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                 class="dw-checkbox" {% if field.value %}checked{% endif %}>
+          <span>{{ field.label }}</span>
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-3">
+      <div>
+        <label class="dw-label" for="{{ form.contact_name.id_for_label }}">{{ form.contact_name.label }}</label>
+        <div class="mt-1">{{ form.contact_name }}</div>
+      </div>
+      <div>
+        <label class="dw-label" for="{{ form.contact_phone.id_for_label }}">{{ form.contact_phone.label }}</label>
+        <div class="mt-1">{{ form.contact_phone }}</div>
+      </div>
+      <div>
+        <label class="dw-label" for="{{ form.contact_email.id_for_label }}">{{ form.contact_email.label }}</label>
+        <div class="mt-1">{{ form.contact_email }}</div>
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+      <ul class="dw-errorlist">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    <button type="submit" class="dw-btn dw-btn-primary">{% t "site_save_continue" %}</button>
+  </form>
+{% endblock %}

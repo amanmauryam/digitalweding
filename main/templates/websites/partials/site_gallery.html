@@ -1,0 +1,20 @@
+{% load dw_tags %}
+{% if website.show_gallery and gallery_photos.exists %}
+  <section class="w-section w-section--alt">
+    <div class="w-wrap">
+      <p class="w-eyebrow" style="text-align:center;">{% t "site_gallery_title" %}</p>
+      <h2 class="w-title" style="text-align:center;">{% t "site_our_photos" %}</h2>
+
+      <div class="w-gallery" style="margin-top:2rem;">
+        {% for photo in gallery_photos %}
+          <figure>
+            <img src="{% if photo.thumbnail %}{{ photo.thumbnail.url }}{% else %}{{ photo.image.url }}{% endif %}"
+                 alt="{{ photo.caption }}" loading="lazy">
+            {% if photo.caption %}<figcaption>{{ photo.caption }}</figcaption>{% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <hr class="w-rule">
+{% endif %}

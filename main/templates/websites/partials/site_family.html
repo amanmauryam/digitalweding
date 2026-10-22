@@ -1,0 +1,22 @@
+{% load dw_tags %}
+{% if website.show_family and website.family_greetings %}
+  <section class="w-section w-section--alt">
+    <div class="w-wrap" style="text-align:center;">
+      <p class="w-eyebrow">{% t "site_family_title" %}</p>
+      <h2 class="w-title">{% t "site_family_title" %}</h2>
+      <p class="w-lede">{{ website.family_greetings|linebreaksbr }}</p>
+
+      {% if family_photos.exists %}
+        <div class="w-gallery" style="margin-top:2rem;max-width:760px;margin-left:auto;margin-right:auto;">
+          {% for photo in family_photos %}
+            <figure>
+              <img src="{% if photo.thumbnail %}{{ photo.thumbnail.url }}{% else %}{{ photo.image.url }}{% endif %}"
+                   alt="{{ photo.caption }}" loading="lazy">
+            </figure>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+  <hr class="w-rule">
+{% endif %}

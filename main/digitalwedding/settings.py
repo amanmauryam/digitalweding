@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "accounts",
     "invitations",
+    "websites",
 ]
 
 MIDDLEWARE = [
@@ -159,6 +160,32 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# Private storage: original invitation cards never live inside MEDIA_ROOT, so
+# they can never be served by Django's development media server.
+PRIVATE_UPLOAD_ROOT = BASE_DIR / "private_uploads"
+
+# --------------------------------------------------------------------------
+# Wedding website builder limits (all configurable through the environment)
+# --------------------------------------------------------------------------
+WEDDING_INVITATION_MAX_MB = int(os.environ.get("WEDDING_INVITATION_MAX_MB", "10"))
+WEDDING_INVITATION_MAX_PAGES = int(
+    os.environ.get("WEDDING_INVITATION_MAX_PAGES", "20")
+)
+WEDDING_INVITATION_ALLOWED_EXTENSIONS = tuple(
+    item.strip().lower()
+    for item in os.environ.get(
+        "WEDDING_INVITATION_ALLOWED_EXTENSIONS", "jpg,jpeg,png,webp,pdf"
+    ).split(",")
+    if item.strip()
+)
+WEDDING_INVITATION_MIN_TEXT_CHARS = int(
+    os.environ.get("WEDDING_INVITATION_MIN_TEXT_CHARS", "40")
+)
+WEDDING_PHOTO_MAX_MB = int(os.environ.get("WEDDING_PHOTO_MAX_MB", "8"))
+WEDDING_RSVP_MIN_SECONDS = int(os.environ.get("WEDDING_RSVP_MIN_SECONDS", "3"))
+WEDDING_RSVP_RATE_LIMIT = int(os.environ.get("WEDDING_RSVP_RATE_LIMIT", "8"))
+WEDDING_RSVP_RATE_WINDOW = int(os.environ.get("WEDDING_RSVP_RATE_WINDOW", "3600"))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

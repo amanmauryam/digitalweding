@@ -1,0 +1,45 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_publish_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_publish_title" %}{% endblock %}
+
+{% block editor_content %}
+  <div class="dw-card p-4 sm:p-6">
+    {% if warnings %}
+      <div class="dw-alert dw-alert-warning mb-4">
+        <strong>{% t "site_missing_info" %}:</strong>
+        <span class="ml-1">{{ warnings|join:", " }}</span>
+      </div>
+    {% endif %}
+
+    <p class="dw-shloka">{% t "site_publish_private_note" %}</p>
+
+    <dl class="mt-4 space-y-2 text-sm">
+      <div class="flex justify-between gap-3">
+        <dt class="text-kalam/60">{% t "site_step_details" %}</dt>
+        <dd class="text-right font-semibold">{{ website.display_title }}</dd>
+      </div>
+      <div class="flex justify-between gap-3">
+        <dt class="text-kalam/60">{% t "site_step_theme" %}</dt>
+        <dd class="text-right font-semibold">{{ website.theme_config.name }}</dd>
+      </div>
+      <div class="flex justify-between gap-3">
+        <dt class="text-kalam/60">{% t "site_open_site" %}</dt>
+        <dd class="dw-latin break-all text-right text-xs">{{ share_url }}</dd>
+      </div>
+    </dl>
+
+    <form method="post" class="mt-6">
+      {% csrf_token %}
+      <input type="hidden" name="confirm" value="yes">
+      <button type="submit" class="dw-btn dw-btn-primary dw-btn-block">{% t "site_publish_confirm" %}</button>
+    </form>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:preview' slug=website.slug %}">{% t "site_preview_title" %}</a>
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:rsvps' slug=website.slug %}">{% t "site_rsvp_responses" %}</a>
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:delete' slug=website.slug %}">{% t "site_delete_title" %}</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "websites/site_base.html" %}
+{% load dw_tags %}
+{% comment %}Mithila Heritage — Madhubani borders, lotus and peacock motifs.{% endcomment %}
+
+{% block head_extra %}
+{% include "invitations/partials/madhubani_sprite.html" %}
+<style>
+  body {
+    background-color: var(--w-bg);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(154,52,18,.05) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(90deg, rgba(154,52,18,.05) 0 1px, transparent 1px 26px);
+  }
+  .w-hero { padding: 3.8rem 0 3.2rem; position: relative; }
+  .w-hero::before,
+  .w-hero::after {
+    content: "";
+    display: block;
+    height: 10px;
+    margin: 0 auto 1.6rem;
+    max-width: 760px;
+    background:
+      repeating-linear-gradient(90deg, var(--w-accent) 0 6px, transparent 6px 12px);
+    opacity: .75;
+  }
+  .w-hero::after { margin: 1.6rem auto 0; }
+  .w-title { color: var(--w-accent); }
+  .w-card {
+    background: var(--w-surface);
+    border: 2px solid var(--w-border);
+    border-radius: var(--w-radius);
+    box-shadow: 0 18px 38px -32px rgba(51,36,26,.8);
+  }
+  .w-section--alt {
+    background: var(--w-surface-alt);
+    border-block: 2px solid var(--w-border);
+  }
+  .w-motif { color: var(--w-accent); opacity: .75; text-align: center; }
+  .w-motif svg { width: 74px; height: 74px; }
+  .w-countdown__box { border-style: double; border-width: 3px; }
+  .w-btn { border-width: 2px; }
+</style>
+{% endblock %}
+
+{% block content_top %}
+  {% if website.wedding_date %}
+    <div class="w-motif" aria-hidden="true">
+      <svg><use href="#lotus"></use></svg>
+    </div>
+  {% endif %}
+{% endblock %}

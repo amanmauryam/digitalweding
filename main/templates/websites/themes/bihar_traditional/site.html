@@ -1,0 +1,37 @@
+{% extends "websites/site_base.html" %}
+{% load dw_tags %}
+{% comment %}Traditional Bihar Wedding — terracotta, turmeric and peacock green.{% endcomment %}
+
+{% block head_extra %}
+{% include "invitations/partials/madhubani_sprite.html" %}
+<style>
+  body {
+    background-color: var(--w-bg);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(194,65,12,.05) 0 2px, transparent 2px 14px),
+      radial-gradient(circle at 50% 8%, rgba(234,179,8,.14), transparent 48%);
+  }
+  .w-hero { padding: 3.4rem 0 3rem; }
+  .w-hero__names { color: var(--w-accent); }
+  .w-eyebrow { color: var(--w-accent); }
+  .w-card {
+    border-color: var(--w-border);
+    border-width: 1px;
+    border-left: 4px solid var(--w-accent);
+    box-shadow: 0 14px 30px -28px rgba(59,36,16,.9);
+  }
+  .w-btn { background: var(--w-accent); }
+  .w-section--alt { background: var(--w-surface-alt); }
+  .w-weave { display: flex; justify-content: center; gap: .7rem; margin: 0 auto 1.4rem; }
+  .w-weave svg { width: 34px; height: 34px; color: var(--w-accent); opacity: .8; }
+  .w-countdown__box { border-color: var(--w-accent); }
+</style>
+{% endblock %}
+
+{% block content_top %}
+  <div class="w-weave" aria-hidden="true">
+    <svg><use href="#peacock"></use></svg>
+    <svg><use href="#kalash"></use></svg>
+    <svg><use href="#bamboo"></use></svg>
+  </div>
+{% endblock %}

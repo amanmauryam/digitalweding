@@ -1,0 +1,19 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_delete_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_delete_title" %}{% endblock %}
+
+{% block editor_content %}
+  <div class="dw-card p-4 sm:p-6">
+    <p class="dw-shloka">{% t "site_delete_warning" %}</p>
+    <p class="mt-2 text-sm">{{ website.display_title }}</p>
+
+    <form method="post" class="mt-5" onsubmit="return confirm('{% t "site_delete_warning" %}')">
+      {% csrf_token %}
+      <input type="hidden" name="confirm" value="yes">
+      <button type="submit" class="dw-btn dw-btn-outline">{% t "site_delete_title" %}</button>
+      <a class="dw-btn" href="{% url 'websites:dashboard' %}">{% t "site_back_to_step" %}</a>
+    </form>
+  </div>
+{% endblock %}

@@ -650,6 +650,520 @@ def get_string(key: str, lang: str = DEFAULT_LANG) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Wedding website builder — UI copy
+# ---------------------------------------------------------------------------
+SITE_STRINGS: dict[str, dict[str, str]] = {
+    "site_cta_create": {
+        "hi": "मेरी वेडिंग वेबसाइट बनाएँ",
+        "mai": "हमर वेडिंग वेबसाइट बनाउ",
+        "bho": "हमर वेडिंग वेबसाइट बनाई",
+        "en": "Create My Wedding Website",
+    },
+    "site_cta_upload": {
+        "hi": "निमंत्रण कार्ड अपलोड करें",
+        "mai": "निमंत्रण कार्ड अपलोड करीं",
+        "bho": "निमंत्रण कार्ड अपलोड करीं",
+        "en": "Upload your invitation card",
+    },
+    "site_cta_manual": {
+        "hi": "विवरण स्वयं भरें",
+        "mai": "विवरण स्वयं भरीं",
+        "bho": "विवरण स्वयं भरीं",
+        "en": "Enter the details manually",
+    },
+    "site_step_upload": {
+        "hi": "अपलोड",
+        "mai": "अपलोड",
+        "bho": "अपलोड",
+        "en": "Upload",
+    },
+    "site_step_details": {
+        "hi": "विवरण",
+        "mai": "विवरण",
+        "bho": "विवरण",
+        "en": "Details",
+    },
+    "site_step_theme": {
+        "hi": "थीम",
+        "mai": "थीम",
+        "bho": "थीम",
+        "en": "Theme",
+    },
+    "site_step_schedule": {
+        "hi": "कार्यक्रम",
+        "mai": "कार्यक्रम",
+        "bho": "कार्यक्रम",
+        "en": "Schedule",
+    },
+    "site_step_photos": {
+        "hi": "तस्वीरें",
+        "mai": "तस्वीर",
+        "bho": "तस्वीर",
+        "en": "Photos",
+    },
+    "site_step_customise": {
+        "hi": "सजावट",
+        "mai": "सजावट",
+        "bho": "सजावट",
+        "en": "Customise",
+    },
+    "site_step_preview": {
+        "hi": "पूर्वावलोकन",
+        "mai": "पूर्वावलोकन",
+        "bho": "पूर्वावलोकन",
+        "en": "Preview",
+    },
+    "site_step_publish": {
+        "hi": "प्रकाशित",
+        "mai": "प्रकाशित",
+        "bho": "प्रकाशित",
+        "en": "Publish",
+    },
+    "site_review_title": {
+        "hi": "निमंत्रण से मिली जानकारी जाँचें",
+        "mai": "निमंत्रण से मिलल जानकारी जाँचीं",
+        "bho": "निमंत्रण से मिलल जानकारी जाँचीं",
+        "en": "Check the details we found",
+    },
+    "site_review_hint": {
+        "hi": "हमने आपके निमंत्रण को पढ़ा है। कृपया जो गलत हो उसे ठीक करें।",
+        "mai": "हमनि अहाँ के निमंत्रण पढ़ल रहल छी। कृपया जे गलत छी ठीक करीं।",
+        "bho": "हमनि आपके निमंत्रण पढ़ल रहल बा। कृपया जे गलत बा ठीक करीं।",
+        "en": "We read your invitation card. Please correct anything that is wrong.",
+    },
+    "site_from_invitation": {
+        "hi": "निमंत्रण से",
+        "mai": "निमंत्रण से",
+        "bho": "निमंत्रण से",
+        "en": "From your invitation",
+    },
+    "site_confirmed": {
+        "hi": "आपकी पुष्टि",
+        "mai": "अहाँ के पुष्टि",
+        "bho": "आपके पुष्टि",
+        "en": "Confirmed by you",
+    },
+    "site_needs_review": {
+        "hi": "जाँच बाकी है",
+        "mai": "जाँच बाकी छी",
+        "bho": "जाँच बाकी बा",
+        "en": "Needs your review",
+    },
+    "site_no_ocr": {
+        "hi": "हम यह नहीं पढ़ सके — कृपया खुद भरें।",
+        "mai": "हम ई नहि पढ़ सकल — कृपया स्वयं भरीं।",
+        "bho": "हम ई नहि पढ़ सकल — कृपया स्वयं भरीं।",
+        "en": "We could not read this automatically — please fill it in.",
+    },
+    "site_save_continue": {
+        "hi": "सहेजें और आगे बढ़ें",
+        "mai": "सहेजीं आ आगाँ बढ़ीं",
+        "bho": "सहेजीं आ आगाँ बढ़ीं",
+        "en": "Save and continue",
+    },
+    "site_theme_title": {
+        "hi": "अपनी वेबसाइट का थीम चुनें",
+        "mai": "अपन वेबसाइट के थीम चुनीं",
+        "bho": "अपन वेबसाइट के थीम चुनीं",
+        "en": "Choose your website theme",
+    },
+    "site_theme_selected": {
+        "hi": "चुनी गई",
+        "mai": "चुनल गई",
+        "bho": "चुनल गई",
+        "en": "Selected",
+    },
+    "site_events_title": {
+        "hi": "वेडिंग का कार्यक्रम",
+        "mai": "वेडिंग के कार्यक्रम",
+        "bho": "वेडिंग के कार्यक्रम",
+        "en": "Wedding schedule",
+    },
+    "site_add_event": {
+        "hi": "कार्यक्रम जोड़ें",
+        "mai": "कार्यक्रम जोड़ीं",
+        "bho": "कार्यक्रम जोड़ीं",
+        "en": "Add an event",
+    },
+    "site_photos_title": {
+        "hi": "तस्वीरें",
+        "mai": "तस्वीर",
+        "bho": "तस्वीर",
+        "en": "Photographs",
+    },
+    "site_add_photo": {
+        "hi": "तस्वीर अपलोड करें",
+        "mai": "तस्वीर अपलोड करीं",
+        "bho": "तस्वीर अपलोड करीं",
+        "en": "Upload a photo",
+    },
+    "site_customise_title": {
+        "hi": "वेबसाइट सजाएँ",
+        "mai": "वेबसाइट सजाउ",
+        "bho": "वेबसाइट सजाई",
+        "en": "Customise your website",
+    },
+    "site_preview_title": {
+        "hi": "अपनी वेबसाइट देखें",
+        "mai": "अपन वेबसाइट देखीं",
+        "bho": "अपन वेबसाइट देखीं",
+        "en": "Preview your website",
+    },
+    "site_missing_info": {
+        "hi": "अभी यह जानकारी नहीं है",
+        "mai": "अभी ई जानकारी नहि छी",
+        "bho": "अभी ई जानकारी नहि बा",
+        "en": "Missing information",
+    },
+    "site_publish_title": {
+        "hi": "वेडिंग वेबसाइट प्रकाशित करें",
+        "mai": "वेडिंग वेबसाइट प्रकाशित करीं",
+        "bho": "वेडिंग वेबसाइट प्रकाशित करीं",
+        "en": "Publish your wedding website",
+    },
+    "site_publish_confirm": {
+        "hi": "हाँ, मेरी वेडिंग वेबसाइट प्रकाशित करें",
+        "mai": "हाँ, हमर वेडिंग वेबसाइट प्रकाशित करीं",
+        "bho": "हाँ, हमर वेडिंग वेबसाइट प्रकाशित करीं",
+        "en": "Yes, publish my wedding website",
+    },
+    "site_publish_private_note": {
+        "hi": "अभी यह वेबसाइट सिर्फ आपको दिखती है। प्रकाशित करने के बाद सबको दिखेगी।",
+        "mai": "अभी ई वेबसाइट सिर्फ अहाँ के दिखी। प्रकाशित करीं बाद सबके दिखी।",
+        "bho": "अभी ई वेबसाइट सिर्फ आपके दिखी। प्रकाशित करीं बाद सबके दिखी।",
+        "en": "This website is private for now. It becomes public only after you publish it.",
+    },
+    "site_share_title": {
+        "hi": "वेडिंग वेबसाइट साझा करें",
+        "mai": "वेडिंग वेबसाइट साझा करीं",
+        "bho": "वेडिंग वेबसाइट साझा करीं",
+        "en": "Share your wedding website",
+    },
+    "site_copy_link": {
+        "hi": "लिंक कॉपी करें",
+        "mai": "लिंक कॉपी करीं",
+        "bho": "लिंक कॉपी करीं",
+        "en": "Copy link",
+    },
+    "site_share_whatsapp": {
+        "hi": "WhatsApp पर भेजें",
+        "mai": "WhatsApp पर भेजीं",
+        "bho": "WhatsApp पर भेजीं",
+        "en": "Share on WhatsApp",
+    },
+    "site_open_site": {
+        "hi": "वेबसाइट खोलें",
+        "mai": "वेबसाइट खोलीं",
+        "bho": "वेबसाइट खोलीं",
+        "en": "Open website",
+    },
+    "site_unpublish": {
+        "hi": "वेबसाइट ऑफ़लाइन करें",
+        "mai": "वेबसाइट ऑफलाइन करीं",
+        "bho": "वेबसाइट ऑफलाइन करीं",
+        "en": "Take the website offline",
+    },
+    "site_delete_title": {
+        "hi": "वेबसाइट मिटाएँ",
+        "mai": "वेबसाइट मिटाउ",
+        "bho": "वेबसाइट मिटाई",
+        "en": "Delete this website",
+    },
+    "site_rsvp_title": {
+        "hi": "क्या आप पहुँचेंगे?",
+        "mai": "क्या अहाँ पहुँचीं?",
+        "bho": "क्या आप पहुँचीं?",
+        "en": "Will you join us?",
+    },
+    "site_rsvp_yes": {
+        "hi": "हाँ, पहुँचूँगा/गी",
+        "mai": "हाँ, पहुँचीं",
+        "bho": "हाँ, पहुँचीं",
+        "en": "Yes, I will attend",
+    },
+    "site_rsvp_no": {
+        "hi": "नहीं, पहुँच नहीं सकूँगा/गी",
+        "mai": "नहि, पहुँच नहि सकबीं",
+        "bho": "नहि, पहुँच नहि सकबीं",
+        "en": "Sorry, I cannot attend",
+    },
+    "site_rsvp_submit": {
+        "hi": "जवाब भेजें",
+        "mai": "जवाब भेजीं",
+        "bho": "जवाब भेजीं",
+        "en": "Send my response",
+    },
+    "site_countdown_title": {
+        "hi": "शादी तक बाकी",
+        "mai": "शादी तक बाकी",
+        "bho": "शादी तक बाकी",
+        "en": "Counting down to the wedding",
+    },
+    "site_story_title": {
+        "hi": "हमारी कहानी",
+        "mai": "हमर कहानी",
+        "bho": "हमर कहानी",
+        "en": "Our story",
+    },
+    "site_schedule_title": {
+        "hi": "कार्यक्रम",
+        "mai": "कार्यक्रम",
+        "bho": "कार्यक्रम",
+        "en": "Wedding schedule",
+    },
+    "site_gallery_title": {
+        "hi": "तस्वीरें",
+        "mai": "तस्वीर",
+        "bho": "तस्वीर",
+        "en": "Gallery",
+    },
+    "site_venue_title": {
+        "hi": "स्थान",
+        "mai": "स्थान",
+        "bho": "स्थान",
+        "en": "Venue",
+    },
+    "site_directions": {
+        "hi": "रास्ता देखें",
+        "mai": "रास्ता देखीं",
+        "bho": "रास्ता देखीं",
+        "en": "Get directions",
+    },
+    "site_family_title": {
+        "hi": "परिवार की शुभकामनाएँ",
+        "mai": "परिवार के शुभकामनाएँ",
+        "bho": "परिवार के शुभकामनाएँ",
+        "en": "Family greetings",
+    },
+    "site_contact_title": {
+        "hi": "संपर्क",
+        "mai": "संपर्क",
+        "bho": "संपर्क",
+        "en": "Contact",
+    },
+    "site_welcome_title": {
+        "hi": "सादर आमंत्रण",
+        "mai": "सादर आमंत्रण",
+        "bho": "सादर आमंत्रण",
+        "en": "You are warmly invited",
+    },
+    "site_dashboard_empty": {
+        "hi": "अभी कोई वेडिंग वेबसाइट नहीं है।",
+        "mai": "अभी कोनो वेडिंग वेबसाइट नहि छी।",
+        "bho": "अभी कोई वेडिंग वेबसाइट नहि बा।",
+        "en": "You have not created a wedding website yet.",
+    },
+    "site_rsvp_responses": {
+        "hi": "जवाब",
+        "mai": "जवाब",
+        "bho": "जवाब",
+        "en": "Responses",
+    },
+    "site_export_csv": {
+        "hi": "CSV में डाउनलोड करें",
+        "mai": "CSV में डाउनलोड करीं",
+        "bho": "CSV में डाउनलोड करीं",
+        "en": "Download CSV",
+    },
+    "site_dashboard_back": {
+        "hi": "मेरी सभी वेबसाइट",
+        "mai": "हमर सभी वेबसाइट",
+        "bho": "हमर सभी वेबसाइट",
+        "en": "All my websites",
+    },
+    "site_group_couple": {
+        "hi": "वर और वधू",
+        "mai": "वर आ वधू",
+        "bho": "वर आ वधू",
+        "en": "The couple",
+    },
+    "site_group_wedding": {
+        "hi": "शादी की जानकारी",
+        "mai": "शादी के जानकारी",
+        "bho": "शादी के जानकारी",
+        "en": "Wedding details",
+    },
+    "site_group_story": {
+        "hi": "कहानी और संदेश",
+        "mai": "कहानी आ संदेश",
+        "bho": "कहानी आ संदेश",
+        "en": "Story and messages",
+    },
+    "site_group_venue": {
+        "hi": "स्थान",
+        "mai": "स्थान",
+        "bho": "स्थान",
+        "en": "Venue",
+    },
+    "site_group_contact": {
+        "hi": "संपर्क",
+        "mai": "संपर्क",
+        "bho": "संपर्क",
+        "en": "Contact",
+    },
+    "site_theme_accents": {
+        "hi": "थीम के रंग",
+        "mai": "थीम के रंग",
+        "bho": "थीम के रंग",
+        "en": "Theme colours",
+    },
+    "site_photo_kinds": {
+        "hi": "तस्वीर का प्रकार",
+        "mai": "तस्वीर के प्रकार",
+        "bho": "तस्वीर के प्रकार",
+        "en": "Photo type",
+    },
+    "site_events_empty": {
+        "hi": "अभी कोई कार्यक्रम नहीं जोड़ा गया।",
+        "mai": "अभी कोनो कार्यक्रम नहि जोड़ल गई।",
+        "bho": "अभी कोई कार्यक्रम नहि जोड़ल गया।",
+        "en": "No event has been added yet.",
+    },
+    "site_photos_empty": {
+        "hi": "अभी कोई तस्वीर नहीं जोड़ी गई।",
+        "mai": "अभी कोनो तस्वीर नहि जोड़ल गई।",
+        "bho": "अभी कोई तस्वीर नहि जोड़ल गई।",
+        "en": "No photograph has been added yet.",
+    },
+    "site_rsvps_empty": {
+        "hi": "अभी कोई जवाब नहीं आया।",
+        "mai": "अभी कोनो जवाब नहि आईल।",
+        "bho": "अभी कोई जवाब नहि आईल।",
+        "en": "No response has come in yet.",
+    },
+    "site_delete_warning": {
+        "hi": "इस वेबसाइट के सारे फ़ोटो, कार्यक्रम और RSVP हमेशा के लिए मिट जाएँगे।",
+        "mai": "ई वेबसाइट के सभे फोटो, कार्यक्रम आ RSVP हमेशा खाति मिट जाइं।",
+        "bho": "ई वेबसाइट के सभे फोटो, कार्यक्रम आ RSVP हमेशा खाति मिट जाईं।",
+        "en": "Every photo, event and RSVP of this website will be deleted for good.",
+    },
+    "site_published_on": {
+        "hi": "प्रकाशित",
+        "mai": "प्रकाशित",
+        "bho": "प्रकाशित",
+        "en": "Published",
+    },
+    "site_views": {
+        "hi": "कुल बार देखा गया",
+        "mai": "कुल बार देखल गई",
+        "bho": "कुल बार देखल गई",
+        "en": "Total views",
+    },
+    "site_guests_coming": {
+        "hi": "आने वाले मेहमान",
+        "mai": "आवे वाला मेहमान",
+        "bho": "आवे वाला मेहमान",
+        "en": "Guests coming",
+    },
+    "site_source_invitation": {
+        "hi": "मूल निमंत्रण डाउनलोड करें",
+        "mai": "मूल निमंत्रण डाउनलोड करीं",
+        "bho": "मूल निमंत्रण डाउनलोड करीं",
+        "en": "Download the original invitation",
+    },
+    "site_back_to_step": {
+        "hi": "पिछले चरण पर लौटें",
+        "mai": "पिछले चरण पर लौटीं",
+        "bho": "पिछले चरण पर लौटीं",
+        "en": "Back to the previous step",
+    },
+    "site_choose_event": {
+        "hi": "बदलने के लिए कार्यक्रम चुनें",
+        "mai": "बदलीं खाति कार्यक्रम चुनीं",
+        "bho": "बदलीं खाति कार्यक्रम चुनीं",
+        "en": "Choose an event to edit",
+    },
+    "site_delete_event": {
+        "hi": "हटाएँ",
+        "mai": "हटाउ",
+        "bho": "हटाई",
+        "en": "Remove",
+    },
+    "site_edit": {
+        "hi": "बदलें",
+        "mai": "बदलीं",
+        "bho": "बदलीं",
+        "en": "Edit",
+    },
+    "site_delete_photo": {
+        "hi": "तस्वीर हटाएँ",
+        "mai": "तस्वीर हटाउ",
+        "bho": "तस्वीर हटाई",
+        "en": "Remove photo",
+    },
+    "site_delete_rsvp": {
+        "hi": "जवाब हटाएँ",
+        "mai": "जवाब हटाउ",
+        "bho": "जवाब हटाई",
+        "en": "Remove response",
+    },
+    "site_couple_line": {
+        "hi": "शादी का निमंत्रण",
+        "mai": "शादी के निमंत्रण",
+        "bho": "शादी के निमंत्रण",
+        "en": "The wedding of",
+    },
+    "site_days": {
+        "hi": "दिन",
+        "mai": "दिन",
+        "bho": "दिन",
+        "en": "Days",
+    },
+    "site_hours": {
+        "hi": "घंटे",
+        "mai": "घंटा",
+        "bho": "घंटा",
+        "en": "Hours",
+    },
+    "site_minutes": {
+        "hi": "मिनट",
+        "mai": "मिनट",
+        "bho": "मिनट",
+        "en": "Minutes",
+    },
+    "site_seconds": {
+        "hi": "सेकंड",
+        "mai": "सेकेन्ड",
+        "bho": "सेकेन्ड",
+        "en": "Seconds",
+    },
+    "site_map_note": {
+        "hi": "नक्शा खोलने के लिए बटन दबाएँ।",
+        "mai": "नक्सा खोलीं खाति बटन दबाउ।",
+        "bho": "नक्सा खोलीं खाति बटन दबाईं।",
+        "en": "Tap the button to open the map.",
+    },
+    "site_our_photos": {
+        "hi": "हमारी तस्वीरें",
+        "mai": "हमर तस्वीर",
+        "bho": "हमर तस्वीर",
+        "en": "Our photographs",
+    },
+    "site_guest_name": {
+        "hi": "आपका नाम",
+        "mai": "अहाँ के नाम",
+        "bho": "आपके नाम",
+        "en": "Your name",
+    },
+    "site_guest_phone": {
+        "hi": "मोबाइल नंबर",
+        "mai": "मोबाइल नंबर",
+        "bho": "मोबाइल नंबर",
+        "en": "Mobile number",
+    },
+    "site_thanks": {
+        "hi": "धन्यवाद! आपका जवाब दर्ज हो गया।",
+        "mai": "धन्यवाद! अहाँ के जवाब दर्ज हो गई।",
+        "bho": "धन्यवाद! आपके जवाब दर्ज हो गई।",
+        "en": "Thank you! Your response has been recorded.",
+    },
+}
+
+
+STRINGS.update(SITE_STRINGS)
+
+
+# ---------------------------------------------------------------------------
 # Form fields — labels, placeholders and help texts follow the active dialect
 # ---------------------------------------------------------------------------
 FORM_LABELS: dict[str, dict[str, str]] = {
@@ -739,8 +1253,7 @@ FORM_LABELS: dict[str, dict[str, str]] = {
         "bho": "कुल संख्या",
         "en": "Total guests",
     },
-    "blessing_message": {
-        "hi": "वर-वधू के लिए शुभकामनाएँ",
+    "blessing_message": {        "hi": "वर-वधू के लिए शुभकामनाएँ",
         "mai": "वर-वधू खाति शुभकामनाएँ",
         "bho": "वर-वधू खाति शुभकामनाएँ",
         "en": "Blessings for the bride & groom",
@@ -1022,8 +1535,291 @@ FORM_HELP: dict[str, dict[str, str]] = {
     "password2": {
         "hi": "ऊपर वाला पासवर्ड दोबारा लिखें।",
         "mai": "ऊपर के पासवर्ड दोबारा लिखीं।",
-        "bho": "ऊपर के पासवर्ड दोबारा लिखीं।",
+        "bho": "ऊपर वाला पासवर्ड दोबारा लिखीं।",
         "en": "Re-type the password above to confirm.",
+    },
+}
+
+
+# ---------------------------------------------------------------------------
+# Wedding website builder — field labels
+# ---------------------------------------------------------------------------
+SITE_FORM_LABELS: dict[str, dict[str, str]] = {
+    "invitation": {
+        "hi": "निमंत्रण कार्ड",
+        "mai": "निमंत्रण कार्ड",
+        "bho": "निमंत्रण कार्ड",
+        "en": "Invitation card",
+    },
+    "acknowledgement": {
+        "hi": "मैं इस निमंत्रण का मालिक हूँ और इसे प्रोसेस करने की अनुमति देता/देती हूँ",
+        "mai": "हम ई निमंत्रण के मालिक छी आ इए प्रोसेस करीं के अनुमति देतछी",
+        "bho": "हम ई निमंत्रण के मालिक बा आ ईए प्रोसेस करीं के अनुमति देत बा",
+        "en": "I own this invitation and allow it to be processed",
+    },
+    "bride_name": {
+        "hi": "वधू का नाम",
+        "mai": "वधू के नाम",
+        "bho": "वधू के नाम",
+        "en": "Bride's name",
+    },
+    "groom_name": {
+        "hi": "वर का नाम",
+        "mai": "वर के नाम",
+        "bho": "वर के नाम",
+        "en": "Groom's name",
+    },
+    "bride_display_name": {
+        "hi": "वधू का अंग्रेज़ी नाम (वैकल्पिक)",
+        "mai": "वधू के अंग्रेजी नाम (वैकल्पिक)",
+        "bho": "वधू के अंग्रेजी नाम (वैकल्पिक)",
+        "en": "Bride's Latin spelling (optional)",
+    },
+    "groom_display_name": {
+        "hi": "वर का अंग्रेज़ी नाम (वैकल्पिक)",
+        "mai": "वर के अंग्रेजी नाम (वैकल्पिक)",
+        "bho": "वर के अंग्रेजी नाम (वैकल्पिक)",
+        "en": "Groom's Latin spelling (optional)",
+    },
+    "wedding_date": {
+        "hi": "वेडिंग की तारीख",
+        "mai": "वेडिंग के तारीख",
+        "bho": "वेडिंग के तारीख",
+        "en": "Wedding date",
+    },
+    "ceremony_time": {
+        "hi": "शादी का समय",
+        "mai": "शादी के समय",
+        "bho": "शादी के समय",
+        "en": "Ceremony time",
+    },
+    "timezone": {
+        "hi": "समय क्षेत्र",
+        "mai": "समय क्षेत्र",
+        "bho": "समय क्षेत्र",
+        "en": "Time zone",
+    },
+    "language": {
+        "hi": "वेबसाइट की भाषा",
+        "mai": "वेबसाइट के भाषा",
+        "bho": "वेबसाइट के भाषा",
+        "en": "Website language",
+    },
+    "introduction": {
+        "hi": "परिचय",
+        "mai": "परिचय",
+        "bho": "परिचय",
+        "en": "Introduction",
+    },
+    "welcome_message": {
+        "hi": "स्वागत संदेश",
+        "mai": "स्वागत संदेश",
+        "bho": "स्वागत संदेश",
+        "en": "Welcome message",
+    },
+    "story": {
+        "hi": "हमारी कहानी",
+        "mai": "हमर कहानी",
+        "bho": "हमर कहानी",
+        "en": "Our story",
+    },
+    "family_greetings": {
+        "hi": "परिवार की शुभकामनाएँ",
+        "mai": "परिवार के शुभकामनाएँ",
+        "bho": "परिवार के शुभकामनाएँ",
+        "en": "Family greetings",
+    },
+    "venue_name": {
+        "hi": "स्थान का नाम",
+        "mai": "स्थान के नाम",
+        "bho": "स्थान के नाम",
+        "en": "Venue name",
+    },
+    "venue_address": {
+        "hi": "पता",
+        "mai": "पता",
+        "bho": "पता",
+        "en": "Address",
+    },
+    "venue_city": {
+        "hi": "शहर",
+        "mai": "शहर",
+        "bho": "शहर",
+        "en": "City",
+    },
+    "venue_state": {
+        "hi": "राज्य",
+        "mai": "राज्य",
+        "bho": "राज्य",
+        "en": "State",
+    },
+    "venue_maps_url": {
+        "hi": "गूगल मैप्स लिंक",
+        "mai": "गूगल मैप्स लिंक",
+        "bho": "गूगल मैप्स लिंक",
+        "en": "Google Maps link",
+    },
+    "contact_name": {
+        "hi": "संपर्क व्यक्ति",
+        "mai": "संपर्क कर्ता",
+        "bho": "संपर्क कर्ता",
+        "en": "Contact person",
+    },
+    "contact_phone": {
+        "hi": "संपर्क फ़ोन",
+        "mai": "संपर्क फोन",
+        "bho": "संपर्क फोन",
+        "en": "Contact phone",
+    },
+    "contact_email": {
+        "hi": "संपर्क ईमेल",
+        "mai": "संपर्क ईमेल",
+        "bho": "संपर्क ईमेल",
+        "en": "Contact email",
+    },
+    "show_contact": {
+        "hi": "संपर्क जानकारी वेबसाइट पर दिखाएँ",
+        "mai": "संपर्क जानकारी वेबसाइट पर दिखाउ",
+        "bho": "संपर्क जानकारी वेबसाइट पर दिखाई",
+        "en": "Show contact details on the website",
+    },
+    "name": {
+        "hi": "नाम",
+        "mai": "नाम",
+        "bho": "नाम",
+        "en": "Name",
+    },
+    "date": {
+        "hi": "तारीख",
+        "mai": "तारीख",
+        "bho": "तारीख",
+        "en": "Date",
+    },
+    "start_time": {
+        "hi": "शुरुआत का समय",
+        "mai": "शुरुआत के समय",
+        "bho": "शुरुआत के समय",
+        "en": "Start time",
+    },
+    "end_time": {
+        "hi": "समाप्ति का समय",
+        "mai": "समाप्ति के समय",
+        "bho": "समाप्ति के समय",
+        "en": "End time",
+    },
+    "venue": {
+        "hi": "स्थान",
+        "mai": "स्थान",
+        "bho": "स्थान",
+        "en": "Venue",
+    },
+    "address": {
+        "hi": "पता",
+        "mai": "पता",
+        "bho": "पता",
+        "en": "Address",
+    },
+    "maps_url": {
+        "hi": "गूगल मैप्स लिंक",
+        "mai": "गूगल मैप्स लिंक",
+        "bho": "गूगल मैप्स लिंक",
+        "en": "Google Maps link",
+    },
+    "dress_code": {
+        "hi": "ड्रेस कोड",
+        "mai": "ड्रेस कोड",
+        "bho": "ड्रेस कोड",
+        "en": "Dress code",
+    },
+    "description": {
+        "hi": "विवरण",
+        "mai": "विवरण",
+        "bho": "विवरण",
+        "en": "Description",
+    },
+    "image": {
+        "hi": "तस्वीर",
+        "mai": "तस्वीर",
+        "bho": "तस्वीर",
+        "en": "Photograph",
+    },
+    "caption": {
+        "hi": "कैप्शन",
+        "mai": "कैप्शन",
+        "bho": "कैप्शन",
+        "en": "Caption",
+    },
+    "kind": {
+        "hi": "तस्वीर का प्रकार",
+        "mai": "तस्वीर के प्रकार",
+        "bho": "तस्वीर के प्रकार",
+        "en": "Photo type",
+    },
+    "theme": {
+        "hi": "वेबसाइट थीम",
+        "mai": "वेबसाइट थीम",
+        "bho": "वेबसाइट थीम",
+        "en": "Website theme",
+    },
+    "accent_color": {
+        "hi": "एक्सेंट रंग",
+        "mai": "एक्सेंट रंग",
+        "bho": "एक्सेंट रंग",
+        "en": "Accent colour",
+    },
+    "show_countdown": {
+        "hi": "काउंटडाउन दिखाएँ",
+        "mai": "काउंटडाउन दिखाउ",
+        "bho": "काउंटडाउन दिखाई",
+        "en": "Show the countdown",
+    },
+    "show_story": {
+        "hi": "कहानी का हिस्सा दिखाएँ",
+        "mai": "कहानी के हिस्सा दिखाउ",
+        "bho": "कहानी के हिस्सा दिखाई",
+        "en": "Show the story section",
+    },
+    "show_gallery": {
+        "hi": "गैलरी दिखाएँ",
+        "mai": "गैलरी दिखाउ",
+        "bho": "गैलरी दिखाई",
+        "en": "Show the gallery",
+    },
+    "show_family": {
+        "hi": "परिवार का हिस्सा दिखाएँ",
+        "mai": "परिवार के हिस्सा दिखाउ",
+        "bho": "परिवार के हिस्सा दिखाई",
+        "en": "Show the family section",
+    },
+    "show_rsvp": {
+        "hi": "RSVP फ़ॉर्म दिखाएँ",
+        "mai": "RSVP फॉर्म दिखाउ",
+        "bho": "RSVP फॉर्म दिखाई",
+        "en": "Show the RSVP form",
+    },
+    "rsvp_ask_guest_count": {
+        "hi": "साथ आने वालों की संख्या पूछें",
+        "mai": "संग आवे वाला के संख्या पूछीं",
+        "bho": "साथ आवे वाला के संख्या पूछीं",
+        "en": "Ask how many guests are coming",
+    },
+    "rsvp_ask_message": {
+        "hi": "शुभकामना संदेश पूछें",
+        "mai": "शुभकामना संदेश पूछीं",
+        "bho": "शुभकामना संदेश पूछीं",
+        "en": "Ask for a message",
+    },
+    "attending": {
+        "hi": "क्या आप पहुँचेंगे?",
+        "mai": "क्या अहाँ पहुँचीं?",
+        "bho": "क्या आप पहुँचीं?",
+        "en": "Attending",
+    },
+    "guest_count": {
+        "hi": "कुल कितन लोग आबीं",
+        "mai": "कुल कितन लोग आबीं",
+        "bho": "कुल कितन लोग आबीं",
+        "en": "Total number of guests",
     },
 }
 
@@ -1073,14 +1869,23 @@ class LocalizedFormMixin:
 
         form = MyForm(request.POST or None, lang=i18n.get_language(request))
 
+    A form may carry its own ``label_table`` (a per-field translation table)
+    so that two apps can use the same field name for two different things —
+    for example a wedding *event* named ``name`` and a guest named ``name``.
+
     Fields that have no translation for the active dialect keep their original
     label, so the mixin is safe to use on forms with mixed field sets.
     """
+
+    label_table: dict[str, dict[str, str]] | None = None
 
     def __init__(self, *args, lang: str | None = None, **kwargs):
         self.lang = normalise(lang or DEFAULT_LANG)
         super().__init__(*args, **kwargs)
         labels = form_labels(self.lang)
+        table = self.label_table
+        if table:
+            labels = {**labels, **_localised(table, self.lang)}
         placeholders = form_placeholders(self.lang)
         helps = form_help(self.lang)
         for name, field in self.fields.items():

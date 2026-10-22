@@ -1,0 +1,30 @@
+{% load dw_tags %}
+{% if website.events.exists %}
+  <section class="w-section">
+    <div class="w-wrap">
+      <p class="w-eyebrow" style="text-align:center;">{% t "site_schedule_title" %}</p>
+      <h2 class="w-title" style="text-align:center;">{% t "site_events_title" %}</h2>
+
+      <ol class="w-timeline" style="max-width:680px;margin:2rem auto 0;">
+        {% for event in website.events.all %}
+          <li>
+            <span class="w-timeline__time">
+              {% if event.date %}{{ event.date|date:"d F Y" }}{% endif %}
+              {% if event.start_time %} · {{ event.start_time|time:"g:i A" }}{% endif %}
+              {% if event.end_time %} – {{ event.end_time|time:"g:i A" }}{% endif %}
+            </span>
+            <h3 style="margin:.2rem 0 .3rem;">{{ event.name }}</h3>
+            {% if event.venue %}<p style="margin:.1rem 0;">{{ event.venue }}</p>{% endif %}
+            {% if event.address %}<p style="margin:.1rem 0;color:var(--w-muted);font-size:.9rem;">{{ event.address }}</p>{% endif %}
+            {% if event.dress_code %}<p style="margin:.1rem 0;font-size:.88rem;">👗 {{ event.dress_code }}</p>{% endif %}
+            {% if event.description %}<p style="margin:.4rem 0 0;color:var(--w-muted);">{{ event.description|linebreaksbr }}</p>{% endif %}
+            {% if event.maps_url %}
+              <p style="margin:.5rem 0 0;"><a class="w-btn w-btn--ghost" href="{{ event.maps_url }}" target="_blank" rel="noopener noreferrer">{% t "site_directions" %}</a></p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  <hr class="w-rule">
+{% endif %}

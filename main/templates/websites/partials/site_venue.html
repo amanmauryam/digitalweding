@@ -1,0 +1,27 @@
+{% load dw_tags %}
+{% if website.venue_name or website.venue_address %}
+  <section class="w-section">
+    <div class="w-wrap" style="text-align:center;">
+      <p class="w-eyebrow">{% t "site_venue_title" %}</p>
+      <h2 class="w-title">{{ website.venue_name }}</h2>
+      {% if website.venue_address %}
+        <p class="w-lede" style="margin:0 auto;">{{ website.venue_address|linebreaksbr }}</p>
+      {% endif %}
+      {% if website.venue_city or website.venue_state %}
+        <p class="w-lede" style="margin:.4rem auto 0;">{{ website.venue_city }}{% if website.venue_city and website.venue_state %}, {% endif %}{{ website.venue_state }}</p>
+      {% endif %}
+      {% if venue_link or directions_url %}
+        <p style="margin-top:1.4rem;">
+          {% if venue_link %}
+            <a class="w-btn w-btn--ghost" href="{{ venue_link }}" target="_blank" rel="noopener noreferrer">{% t "site_venue_title" %}</a>
+          {% endif %}
+          {% if directions_url %}
+            <a class="w-btn" href="{{ directions_url }}" target="_blank" rel="noopener noreferrer">{% t "site_directions" %}</a>
+          {% endif %}
+        </p>
+        <p class="w-lede" style="margin:.8rem auto 0;font-size:.8rem;">{% t "site_map_note" %}</p>
+      {% endif %}
+    </div>
+  </section>
+  <hr class="w-rule">
+{% endif %}

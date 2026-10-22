@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load dw_tags %}
+
+{% block title %}{% t "site_cta_create" %} · DigitalWedding{% endblock %}
+{% block description %}{% t "site_cta_create" %}{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-3xl px-4 py-8">
+  <p class="dw-eyebrow">{% t "site_cta_create" %}</p>
+  <h1 class="dw-display mt-1 text-2xl sm:text-3xl">{% t "site_cta_create" %}</h1>
+  <p class="mt-2 max-w-2xl text-sm text-kalam/75">{% t "site_review_hint" %}</p>
+
+  <div class="mt-6 grid gap-4">
+    <form method="post" enctype="multipart/form-data" class="dw-card p-4 sm:p-6">
+      {% csrf_token %}
+      <h2 class="dw-display text-lg">{% t "site_cta_upload" %}</h2>
+
+      <div class="mt-3">
+        <label class="dw-label" for="{{ form.invitation.id_for_label }}">{{ form.invitation.label }}</label>
+        <input class="dw-input mt-1" type="file" name="invitation" id="{{ form.invitation.id_for_label }}"
+               accept=".jpg,.jpeg,.png,.webp,.pdf" required>
+        <p class="dw-help mt-1">{{ form.invitation.help_text }}</p>
+        {% if form.invitation.errors %}
+          <ul class="dw-errorlist">
+            {% for error in form.invitation.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <div class="mt-3 flex items-start gap-2">
+        <input type="checkbox" name="acknowledgement" id="{{ form.acknowledgement.id_for_label }}"
+               class="dw-checkbox" {% if form.acknowledgement.value %}checked{% endif %}>
+        <label class="dw-help" for="{{ form.acknowledgement.id_for_label }}">{{ form.acknowledgement.label }}</label>
+      </div>
+
+      <button type="submit" class="dw-btn dw-btn-primary mt-4">{% t "site_step_upload" %}</button>
+    </form>
+
+    <form method="post" class="dw-card p-4 sm:p-6">
+      {% csrf_token %}
+      <h2 class="dw-display text-lg">{% t "site_cta_manual" %}</h2>
+      <p class="dw-help mt-1">{% t "site_no_ocr" %}</p>
+      <button type="submit" name="manual" value="1" class="dw-btn dw-btn-outline mt-4">{% t "site_cta_manual" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

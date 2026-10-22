@@ -1,0 +1,62 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_photos_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_photos_title" %}{% endblock %}
+
+{% block editor_content %}
+  <div class="grid gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
+    <section class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display mb-3 text-lg">{% t "site_add_photo" %}</h2>
+      <form method="post" enctype="multipart/form-data" class="space-y-3">
+        {% csrf_token %}
+        <div>
+          <label class="dw-label" for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+          <div class="mt-1">{{ form.image }}</div>
+        </div>
+        <div>
+          <label class="dw-label" for="{{ form.caption.id_for_label }}">{{ form.caption.label }}</label>
+          <div class="mt-1">{{ form.caption }}</div>
+        </div>
+        <div>
+          <label class="dw-label" for="{{ form.kind.id_for_label }}">{{ form.kind.label }}</label>
+          <div class="mt-1">{{ form.kind }}</div>
+        </div>
+        {% if form.errors %}
+          <ul class="dw-errorlist">
+            {% for field_errors in form.errors.values %}{% for error in field_errors %}<li>{{ error }}</li>{% endfor %}{% endfor %}
+          </ul>
+        {% endif %}
+        <button type="submit" class="dw-btn dw-btn-primary">{% t "site_add_photo" %}</button>
+      </form>
+    </section>
+
+    <section class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display mb-3 text-lg">{% t "site_gallery_title" %}</h2>
+      {% if photo_list %}
+        <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {% for photo in photo_list %}
+            <li class="dw-card-inner overflow-hidden p-0">
+              {% if photo.thumbnail %}
+                <img src="{{ photo.thumbnail.url }}" alt="{{ photo.caption }}" class="h-32 w-full object-cover">
+              {% else %}
+                <img src="{{ photo.image.url }}" alt="{{ photo.caption }}" class="h-32 w-full object-cover">
+              {% endif %}
+              <div class="p-2">
+                <p class="truncate text-xs">{{ photo.caption }}</p>
+                <p class="dw-help text-xs">{{ photo.get_kind_display }}</p>
+                <form method="post" action="{% url 'websites:photo_delete' slug=website.slug photo_id=photo.pk %}"
+                      onsubmit="return confirm('{% t "site_delete_warning" %}')">
+                  {% csrf_token %}
+                  <button type="submit" class="dw-btn dw-btn-sm dw-btn-outline mt-1">{% t "site_delete_photo" %}</button>
+                </form>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="dw-help">{% t "site_photos_empty" %}</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

@@ -740,6 +740,18 @@
     font-size: 0.78rem;
     border: 1px solid currentColor;
   }
+  .dw-pill-live {
+    color: var(--dw-peacock-dark);
+    border-color: var(--dw-peacock);
+    background: color-mix(in srgb, var(--dw-peacock) 14%, transparent);
+  }
+  /* Wedding-website editor ------------------------------------------------ */
+  .dw-editor-steps {
+    counter-reset: dw-step;
+  }
+  .dw-editor-steps li::marker {
+    color: var(--dw-ochre);
+  }
   .dw-fade-in {
     animation: dw-fade-in 0.6s ease both;
   }

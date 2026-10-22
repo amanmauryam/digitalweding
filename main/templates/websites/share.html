@@ -1,0 +1,38 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_share_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_share_title" %}{% endblock %}
+
+{% block editor_content %}
+  <div class="dw-card p-4 sm:p-6">
+    <p class="dw-latin break-all rounded-md border border-ochre/40 bg-parchment/70 px-3 py-2 text-sm">{{ public_url }}</p>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <a class="dw-btn dw-btn-primary" href="{{ whatsapp_url }}" target="_blank" rel="noopener noreferrer">{% t "site_share_whatsapp" %}</a>
+      <button type="button" class="dw-btn dw-btn-outline" onclick="navigator.clipboard.writeText('{{ public_url }}');this.textContent='✓'">{% t "site_copy_link" %}</button>
+      <a class="dw-btn dw-btn-outline" href="{{ public_url }}" target="_blank" rel="noopener">{% t "site_open_site" %}</a>
+    </div>
+
+    <div class="mt-5">
+      <p class="dw-label">{% t "site_share_whatsapp" %}</p>
+      <p class="dw-help mt-1">{{ share_message }}</p>
+    </div>
+
+    {% if preview_image %}
+      <div class="mt-5">
+        <p class="dw-label">{% t "site_gallery_title" %}</p>
+        <img src="{{ preview_image }}" alt="{{ website.display_title }}" class="mt-2 w-full max-w-sm rounded-lg border border-ochre/40">
+      </div>
+    {% endif %}
+
+    <div class="mt-6 flex flex-wrap gap-2 border-t border-ochre/30 pt-4">
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:rsvps' slug=website.slug %}">{% t "site_rsvp_responses" %}</a>
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:preview' slug=website.slug %}">{% t "site_preview_title" %}</a>
+      <form method="post" action="{% url 'websites:unpublish' slug=website.slug %}">
+        {% csrf_token %}
+        <button type="submit" class="dw-btn dw-btn-outline">{% t "site_unpublish" %}</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

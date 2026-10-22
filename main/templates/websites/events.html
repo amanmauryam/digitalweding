@@ -1,0 +1,104 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_events_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_events_title" %}{% endblock %}
+
+{% block editor_content %}
+  <div class="grid gap-5 lg:grid-cols-2">
+    <section class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display mb-3 text-lg">
+        {% if editing %}{{ editing.name }}{% else %}{% t "site_add_event" %}{% endif %}
+      </h2>
+      <form method="post" class="space-y-3">
+        {% csrf_token %}
+        {% if editing %}<input type="hidden" name="event_id" value="{{ editing.pk }}">{% endif %}
+
+        <div>
+          <label class="dw-label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+          <div class="mt-1">{{ form.name }}</div>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div>
+            <label class="dw-label" for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+            <div class="mt-1">{{ form.date }}</div>
+          </div>
+          <div>
+            <label class="dw-label" for="{{ form.start_time.id_for_label }}">{{ form.start_time.label }}</label>
+            <div class="mt-1">{{ form.start_time }}</div>
+          </div>
+          <div>
+            <label class="dw-label" for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label>
+            <div class="mt-1">{{ form.end_time }}</div>
+          </div>
+          <div>
+            <label class="dw-label" for="{{ form.venue.id_for_label }}">{{ form.venue.label }}</label>
+            <div class="mt-1">{{ form.venue }}</div>
+          </div>
+        </div>
+        <div>
+          <label class="dw-label" for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+          <div class="mt-1">{{ form.address }}</div>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div>
+            <label class="dw-label" for="{{ form.maps_url.id_for_label }}">{{ form.maps_url.label }}</label>
+            <div class="mt-1">{{ form.maps_url }}</div>
+          </div>
+          <div>
+            <label class="dw-label" for="{{ form.dress_code.id_for_label }}">{{ form.dress_code.label }}</label>
+            <div class="mt-1">{{ form.dress_code }}</div>
+          </div>
+        </div>
+        <div>
+          <label class="dw-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+          <div class="mt-1">{{ form.description }}</div>
+        </div>
+
+        {% if form.errors %}
+          <ul class="dw-errorlist">
+            {% for field_errors in form.errors.values %}{% for error in field_errors %}<li>{{ error }}</li>{% endfor %}{% endfor %}
+          </ul>
+        {% endif %}
+
+        <div class="flex flex-wrap gap-2">
+          <button type="submit" class="dw-btn dw-btn-primary">{% t "site_save_continue" %}</button>
+          {% if editing %}
+            <a class="dw-btn dw-btn-outline" href="{% url 'websites:events' slug=website.slug %}">{% t "site_back_to_step" %}</a>
+          {% endif %}
+        </div>
+      </form>
+    </section>
+
+    <section class="dw-card p-4 sm:p-5">
+      <h2 class="dw-display mb-3 text-lg">{% t "site_schedule_title" %}</h2>
+      {% if event_list %}
+        <ol class="dw-timeline">
+          {% for item in event_list %}
+            <li class="dw-timeline-item">
+              <span class="dw-timeline-dot"></span>
+              <div class="dw-card-inner p-3">
+                <h3 class="font-semibold">{{ item.name }}</h3>
+                <p class="dw-help mt-0.5">
+                  {% if item.date %}{{ item.date|date:"d M Y" }}{% endif %}
+                  {% if item.start_time %} · {{ item.start_time|time:"g:i A" }}{% endif %}
+                  {% if item.venue %} · {{ item.venue }}{% endif %}
+                </p>
+                {% if item.dress_code %}<p class="dw-help">{{ item.dress_code }}</p>{% endif %}
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <a class="dw-btn dw-btn-sm dw-btn-outline" href="?edit={{ item.pk }}">{% t "site_choose_event" %}</a>
+                  <form method="post" onsubmit="return confirm('{% t "site_delete_warning" %}')">
+                    {% csrf_token %}
+                    <button type="submit" name="delete_event" value="{{ item.pk }}" class="dw-btn dw-btn-sm dw-btn-outline">{% t "site_delete_event" %}</button>
+                  </form>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p class="dw-help">{% t "site_events_empty" %}</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

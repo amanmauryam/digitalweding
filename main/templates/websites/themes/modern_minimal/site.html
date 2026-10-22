@@ -1,0 +1,19 @@
+{% extends "websites/site_base.html" %}
+{% load dw_tags %}
+{% comment %}Modern Minimal — warm white, editorial spacing, hairline rules.{% endcomment %}
+
+{% block head_extra %}
+<style>
+  body { background-image: none; }
+  .w-hero { padding: 5rem 0 4rem; }
+  .w-hero__names { font-weight: 500; letter-spacing: -.01em; }
+  .w-eyebrow { letter-spacing: .3em; font-size: .66rem; }
+  .w-title { font-weight: 500; }
+  .w-card { border-width: 1px; box-shadow: 0 12px 30px -28px rgba(0,0,0,.45); }
+  .w-btn { border-radius: 4px; }
+  .w-countdown__box { background: transparent; border-color: var(--w-border); border-radius: 4px; }
+  .w-section { padding: 4rem 0; }
+  .w-section--alt { background: var(--w-surface-alt); }
+  .w-timeline li::before { background: var(--w-accent); box-shadow: 0 0 0 4px var(--w-surface-alt); }
+</style>
+{% endblock %}

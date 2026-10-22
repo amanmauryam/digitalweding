@@ -1,0 +1,207 @@
+{% load static %}{% load dw_tags %}<!DOCTYPE html>
+<html lang="{{ dw_lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ seo_title }}</title>
+  <meta name="description" content="{{ seo_description }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ seo_title }}">
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  {% if preview_image %}
+    <meta property="og:image" content="{{ preview_image }}">
+    <meta name="twitter:card" content="summary_large_image">
+  {% else %}
+    <meta name="twitter:card" content="summary">
+  {% endif %}
+  <meta name="robots" content="{% if is_preview %}noindex, nofollow{% else %}index, follow{% endif %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{{ dw_google_fonts }}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script type="application/ld+json">{{ json_ld|safe }}</script>
+  <style>
+    :root {
+      --w-bg: {{ theme.colors.bg }};
+      --w-surface: {{ theme.colors.surface }};
+      --w-surface-alt: {{ theme.colors.surface_alt }};
+      --w-text: {{ theme.colors.text }};
+      --w-muted: {{ theme.colors.muted }};
+      --w-accent: {{ website.accent }};
+      --w-accent-soft: {{ theme.colors.accent_soft }};
+      --w-border: {{ theme.colors.border }};
+      --w-radius: {{ theme.radius }};
+      --w-heading: {{ theme.heading_font }};
+      --w-body: {{ theme.body_font }};
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--w-bg);
+      color: var(--w-text);
+      font-family: var(--w-body);
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+    }
+    h1, h2, h3, .w-display { font-family: var(--w-heading); font-weight: 600; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .w-wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.1rem; }
+    .w-section { padding: 3.2rem 0; }
+    .w-section--alt { background: var(--w-surface); }
+    .w-eyebrow {
+      font-family: var(--w-heading);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-size: .72rem;
+      color: var(--w-accent);
+      margin: 0 0 .6rem;
+    }
+    .w-title { font-size: clamp(1.6rem, 4.4vw, 2.4rem); margin: 0 0 .8rem; line-height: 1.25; }
+    .w-lede { color: var(--w-muted); max-width: 60ch; margin: 0 auto; }
+    .w-rule { height: 1px; background: var(--w-border); opacity: .5; border: 0; margin: 0; }
+    .w-card {
+      background: var(--w-surface);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius);
+      padding: 1.4rem;
+    }
+    .w-btn {
+      display: inline-block;
+      padding: .72rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid var(--w-accent);
+      background: var(--w-accent);
+      color: var(--w-bg);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .w-btn--ghost { background: transparent; color: var(--w-accent); }
+    .w-hero { text-align: center; padding: 3.6rem 0 3rem; }
+    .w-hero__names { font-size: clamp(2rem, 7vw, 3.6rem); margin: .2rem 0 .6rem; line-height: 1.15; }
+    .w-hero__amp { display: block; font-size: .5em; color: var(--w-accent); margin: .3rem 0; }
+    .w-hero__meta { color: var(--w-muted); letter-spacing: .06em; }
+    .w-countdown { display: flex; justify-content: center; gap: .7rem; margin: 1.8rem 0 0; flex-wrap: wrap; }
+    .w-countdown__box {
+      min-width: 74px;
+      padding: .7rem .5rem;
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius);
+      background: var(--w-surface);
+    }
+    .w-countdown__num { font-family: var(--w-heading); font-size: 1.5rem; display: block; }
+    .w-countdown__label { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--w-muted); }
+    .w-photo { border-radius: var(--w-radius); overflow: hidden; box-shadow: 0 18px 40px -24px rgba(0,0,0,.55); }
+    .w-photo img { width: 100%; object-fit: cover; }
+    .w-grid { display: grid; gap: 1.2rem; }
+    @media (min-width: 760px) { .w-grid--2 { grid-template-columns: 1fr 1fr; align-items: center; } }
+    .w-timeline { list-style: none; margin: 0; padding: 0; }
+    .w-timeline li {
+      position: relative;
+      padding: 0 0 1.4rem 1.6rem;
+      border-left: 2px solid var(--w-border);
+      margin-left: .5rem;
+    }
+    .w-timeline li:last-child { border-left-color: transparent; }
+    .w-timeline li::before {
+      content: "";
+      position: absolute; left: -8px; top: .35rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--w-accent);
+    }
+    .w-timeline__time { color: var(--w-muted); font-size: .85rem; letter-spacing: .04em; }
+    .w-gallery { display: grid; gap: .8rem; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 640px) { .w-gallery { grid-template-columns: repeat(3, 1fr); } }
+    .w-gallery figure { margin: 0; }
+    .w-gallery img { border-radius: var(--w-radius); width: 100%; height: 190px; object-fit: cover; }
+    .w-gallery figcaption { font-size: .78rem; color: var(--w-muted); margin-top: .3rem; }
+    .w-field { display: block; margin-bottom: .9rem; }
+    .w-field span { display: block; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--w-muted); margin-bottom: .3rem; }
+    .w-input {
+      width: 100%;
+      padding: .7rem .85rem;
+      border-radius: calc(var(--w-radius) * .6);
+      border: 1px solid var(--w-border);
+      background: var(--w-bg);
+      color: var(--w-text);
+      font-family: var(--w-body);
+      font-size: 1rem;
+    }
+    .w-input:focus { outline: 2px solid var(--w-accent); outline-offset: 1px; }
+    .w-error { color: #e11d48; font-size: .82rem; margin: .25rem 0 0; }
+    .w-alert {
+      border-radius: var(--w-radius);
+      padding: .8rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--w-border);
+      background: var(--w-surface-alt);
+      font-size: .92rem;
+    }
+    .w-alert--ok { border-color: #16a34a; }
+    .w-alert--err { border-color: #e11d48; }
+    .w-foot { text-align: center; padding: 2.4rem 0 2.8rem; color: var(--w-muted); font-size: .85rem; }
+    .w-foot a { color: var(--w-accent); }
+    .w-hidden { position: absolute; left: -9999px; }
+    @media print { .w-no-print { display: none; } }
+  </style>
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  {% if is_preview %}
+    <div class="w-alert w-no-print" style="border-radius:0;margin:0;text-align:center;">{% t "site_preview_title" %}</div>
+  {% endif %}
+
+  <main>
+    {% block hero %}{% include "websites/partials/site_hero.html" %}{% endblock %}
+    {% block content_top %}{% endblock %}
+    {% block story %}{% include "websites/partials/site_story.html" %}{% endblock %}
+    {% block schedule %}{% include "websites/partials/site_schedule.html" %}{% endblock %}
+    {% block gallery %}{% include "websites/partials/site_gallery.html" %}{% endblock %}
+    {% block venue %}{% include "websites/partials/site_venue.html" %}{% endblock %}
+    {% block family %}{% include "websites/partials/site_family.html" %}{% endblock %}
+    {% block rsvp %}{% include "websites/partials/site_rsvp.html" %}{% endblock %}
+  </main>
+
+  <footer class="w-foot">
+    <div class="w-wrap">
+      {% if website.show_contact and website.contact_name %}
+        <p><strong>{{ website.contact_name }}</strong>
+          {% if website.contact_phone %} · <a href="tel:{{ website.contact_phone }}">{{ website.contact_phone }}</a>{% endif %}
+          {% if website.contact_email %} · <a href="mailto:{{ website.contact_email }}">{{ website.contact_email }}</a>{% endif %}
+        </p>
+      {% endif %}
+      <p>{% t "site_couple_line" %} · <a href="{{ site_url_origin }}/" rel="noopener">DigitalWedding</a></p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+  <script>
+    (function () {
+      var box = document.querySelector("[data-countdown]");
+      if (!box) { return; }
+      var target = new Date(box.getAttribute("data-countdown"));
+      if (isNaN(target.getTime())) { return; }
+      function pad(value) { return value < 10 ? "0" + value : String(value); }
+      function tick() {
+        var diff = target.getTime() - Date.now();
+        if (diff < 0) { diff = 0; }
+        var seconds = Math.floor(diff / 1000);
+        var values = {
+          d: Math.floor(seconds / 86400),
+          h: Math.floor((seconds % 86400) / 3600),
+          m: Math.floor((seconds % 3600) / 60),
+          s: seconds % 60
+        };
+        Object.keys(values).forEach(function (key) {
+          var node = box.querySelector('[data-cd="' + key + '"]');
+          if (node) { node.textContent = key === "s" ? pad(values[key]) : values[key]; }
+        });
+      }
+      tick();
+      window.setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>

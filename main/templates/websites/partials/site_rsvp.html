@@ -1,0 +1,62 @@
+{% load dw_tags %}
+{% if website.show_rsvp and rsvp_form %}
+  <section class="w-section" id="rsvp">
+    <div class="w-wrap" style="max-width:620px;">
+      <p class="w-eyebrow" style="text-align:center;">{% t "site_rsvp_title" %}</p>
+      <h2 class="w-title" style="text-align:center;">{% t "site_rsvp_title" %}</h2>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="w-alert {% if message.tags == 'success' %}w-alert--ok{% elif message.tags == 'error' %}w-alert--err{% endif %}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" action="{% url 'websites:public_rsvp' slug=website.slug %}" class="w-card">
+        {% csrf_token %}
+        {{ rsvp_form.website }}
+        {{ rsvp_form.started_at }}
+        <div class="w-hidden" aria-hidden="true">{{ rsvp_form.company }}</div>
+
+        <label class="w-field">
+          <span>{% t "site_guest_name" %}</span>
+          {{ rsvp_form.guest_name }}
+          {% if rsvp_form.guest_name.errors %}<p class="w-error">{{ rsvp_form.guest_name.errors|join:", " }}</p>{% endif %}
+        </label>
+
+        <label class="w-field">
+          <span>{% t "site_guest_phone" %}</span>
+          {{ rsvp_form.guest_phone }}
+          {% if rsvp_form.guest_phone.errors %}<p class="w-error">{{ rsvp_form.guest_phone.errors|join:", " }}</p>{% endif %}
+        </label>
+
+        <fieldset class="w-field" style="border:0;padding:0;">
+          <legend style="font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--w-muted);padding:0;">{% t "site_rsvp_title" %}</legend>
+          <label style="display:flex;align-items:center;gap:.5rem;margin-top:.4rem;">
+            <input type="radio" name="attending" value="True" checked style="width:auto;"> {% t "site_rsvp_yes" %}
+          </label>
+          <label style="display:flex;align-items:center;gap:.5rem;margin-top:.25rem;">
+            <input type="radio" name="attending" value="False" style="width:auto;"> {% t "site_rsvp_no" %}
+          </label>
+        </fieldset>
+
+        {% if website.rsvp_ask_guest_count %}
+          <label class="w-field">
+            <span>{% t "site_rsvp_title" }}</span>
+            {{ rsvp_form.guest_count }}
+            {% if rsvp_form.guest_count.errors %}<p class="w-error">{{ rsvp_form.guest_count.errors|join:", " }}</p>{% endif %}
+          </label>
+        {% endif %}
+
+        {% if website.rsvp_ask_message %}
+          <label class="w-field">
+            <span>{% t "site_welcome_title" %}</span>
+            {{ rsvp_form.message }}
+            {% if rsvp_form.message.errors %}<p class="w-error">{{ rsvp_form.message.errors|join:", " }}</p>{% endif %}
+          </label>
+        {% endif %}
+
+        <button type="submit" class="w-btn" style="width:100%;">{% t "site_rsvp_submit" %}</button>
+      </form>
+    </div>
+  </section>
+{% endif %}

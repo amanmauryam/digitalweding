@@ -1,0 +1,23 @@
+{% extends "websites/site_base.html" %}
+{% load dw_tags %}
+{% comment %}Contemporary Luxury — ink blue, wide tracking, hairline rules.{% endcomment %}
+
+{% block head_extra %}
+<style>
+  body {
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(201,162,39,.22), transparent 56%),
+      var(--w-bg);
+  }
+  .w-hero { padding: 5rem 0 4.2rem; }
+  .w-hero__names { letter-spacing: .08em; text-transform: uppercase; font-size: clamp(1.6rem, 5.4vw, 3rem); }
+  .w-eyebrow { letter-spacing: .42em; font-size: .64rem; }
+  .w-title { letter-spacing: .06em; }
+  .w-card { border-width: 1px; border-color: rgba(201,162,39,.45); background: rgba(18,40,60,.72); }
+  .w-section--alt { background: var(--w-surface); border-block: 1px solid rgba(201,162,39,.32); }
+  .w-btn { letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; }
+  .w-rule { opacity: .8; }
+  .w-countdown__box { border-color: rgba(201,162,39,.5); background: transparent; }
+  .w-countdown__num { letter-spacing: .04em; }
+</style>
+{% endblock %}

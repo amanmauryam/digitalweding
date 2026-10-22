@@ -1,0 +1,28 @@
+{% extends "websites/site_base.html" %}
+{% load dw_tags %}
+{% comment %}Floral Romance — blush tones with botanical line work.{% endcomment %}
+
+{% block head_extra %}
+<style>
+  body {
+    background-image:
+      radial-gradient(circle at 15% 12%, rgba(201,138,146,.16), transparent 44%),
+      radial-gradient(circle at 88% 30%, rgba(164,180,148,.16), transparent 46%);
+  }
+  .w-hero { padding: 4.4rem 0 3.6rem; position: relative; }
+  .w-hero::after {
+    content: "❀";
+    display: block;
+    font-size: 1.4rem;
+    color: var(--w-accent);
+    opacity: .7;
+    margin-top: 1.2rem;
+  }
+  .w-hero__names { font-style: italic; }
+  .w-card { box-shadow: 0 20px 44px -34px rgba(74,47,51,.55); }
+  .w-btn { border-radius: 999px; }
+  .w-gallery img { border-radius: 22px; }
+  .w-timeline li::before { border-radius: 50%; }
+  .w-section--alt { background: var(--w-surface); }
+</style>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_preview_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_preview_title" %}{% endblock %}
+
+{% block editor_content %}
+  {% if warnings %}
+    <div class="dw-alert dw-alert-warning mb-4">
+      <strong>{% t "site_missing_info" %}:</strong>
+      <span class="ml-1">{{ warnings|join:", " }}</span>
+    </div>
+  {% endif %}
+
+  <div class="dw-card p-4">
+    <div class="mb-3 flex flex-wrap items-center gap-2">
+      <span class="dw-eyebrow">{% t "site_preview_title" %}</span>
+      <span class="dw-pill">{{ website.theme_config.name }}</span>
+      {% if website.is_published %}
+        <a class="dw-btn dw-btn-sm dw-btn-outline" href="{{ website.get_absolute_url }}" target="_blank" rel="noopener">{% t "site_open_site" %}</a>
+      {% endif %}
+    </div>
+
+    <div class="mx-auto w-full max-w-[420px] overflow-hidden rounded-[20px] border border-ochre/50 bg-white shadow-madhubani">
+      <iframe src="{{ frame_url }}" title="{% t 'site_preview_title' %}" class="h-[70vh] w-full border-0" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-2">
+    <a class="dw-btn dw-btn-primary" href="{% url 'websites:publish' slug=website.slug %}">{% t "site_step_publish" %}</a>
+    <a class="dw-btn dw-btn-outline" href="{% url 'websites:customize' slug=website.slug %}">{% t "site_customise_title" %}</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "websites/base_editor.html" %}
+{% load dw_tags %}
+
+{% block editor_title %}{% t "site_review_title" %}{% endblock %}
+{% block editor_heading %}{% t "site_review_title" %}{% endblock %}
+{% block editor_subheading %}
+  <p class="mt-1 max-w-2xl text-sm text-kalam/75">{% t "site_review_hint" %}</p>
+{% endblock %}
+
+{% block editor_content %}
+  <form method="post" class="space-y-5">
+    {% csrf_token %}
+
+    {% if warnings %}
+      <div class="dw-alert dw-alert-warning">{% t "site_no_ocr" %} {{ warnings }}</div>
+    {% endif %}
+
+    {% for group in groups %}
+      <section class="dw-card p-4 sm:p-5">
+        <h2 class="dw-display mb-3 text-lg">{% t group.key %}</h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {% for field in group.fields %}
+            <div class="{% if field.field.widget.input_type == 'textarea' or field.name == 'family_greetings' or field.name == 'story' or field.name == 'venue_address' or field.name == 'welcome_message' or field.name == 'introduction' %}sm:col-span-2{% endif %}">
+              <label class="dw-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {% if field.name in extracted %}
+                <span class="dw-pill mt-1 inline-block text-xs">{% t "site_from_invitation" %}</span>
+              {% endif %}
+              <div class="mt-1">{{ field }}</div>
+              {% if field.help_text %}<p class="dw-help mt-1">{{ field.help_text }}</p>{% endif %}
+              {% if field.errors %}
+                <ul class="dw-errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+
+    <div class="flex flex-wrap items-center gap-2">
+      <button type="submit" class="dw-btn dw-btn-primary">{% t "site_save_continue" %}</button>
+      <a class="dw-btn dw-btn-outline" href="{% url 'websites:create' %}">{% t "site_back_to_step" %}</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% load dw_tags %}
+<section class="w-hero">
+  <div class="w-wrap">
+    <p class="w-eyebrow">{% t "site_welcome_title" %}</p>
+    <h1 class="w-hero__names">
+      {{ website.display_groom }}<span class="w-hero__amp">&amp;</span>{{ website.display_bride }}
+    </h1>
+
+    {% if website.wedding_date %}
+      <p class="w-hero__meta">
+        {{ website.wedding_date|date:"d F Y" }}{% if website.ceremony_time %} · {{ website.ceremony_time|time:"g:i A" }}{% endif %}
+      </p>
+    {% endif %}
+
+    {% if website.venue_name %}
+      <p class="w-hero__meta">{{ website.venue_name }}{% if website.venue_city %}, {{ website.venue_city }}{% endif %}</p>
+    {% endif %}
+
+    {% if website.show_countdown and website.wedding_date %}
+      <div class="w-countdown" data-countdown="{{ website.wedding_date|date:'Y-m-d' }}T{{ website.ceremony_time|time:'H:i'|default:'00:00' }}">
+        <div class="w-countdown__box">
+          <span class="w-countdown__num" data-cd="d">{% if days_left and days_left > 0 %}{{ days_left }}{% else %}0{% endif %}</span>
+          <span class="w-countdown__label">{% t "site_days" %}</span>
+        </div>
+        <div class="w-countdown__box">
+          <span class="w-countdown__num" data-cd="h">0</span>
+          <span class="w-countdown__label">{% t "site_hours" %}</span>
+        </div>
+        <div class="w-countdown__box">
+          <span class="w-countdown__num" data-cd="m">0</span>
+          <span class="w-countdown__label">{% t "site_minutes" %}</span>
+        </div>
+        <div class="w-countdown__box">
+          <span class="w-countdown__num" data-cd="s">0</span>
+          <span class="w-countdown__label">{% t "site_seconds" %}</span>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if website.welcome_message %}
+      <p class="w-lede" style="margin-top:1.4rem;">{{ website.welcome_message|linebreaksbr }}</p>
+    {% elif website.introduction %}
+      <p class="w-lede" style="margin-top:1.4rem;">{{ website.introduction|linebreaksbr }}</p>
+    {% endif %}
+
+    {% if couple_photo %}
+      <div class="w-photo" style="max-width:380px;margin:2.2rem auto 0;">
+        <img src="{{ couple_photo.image.url }}" alt="{{ website.couple_line }}" width="380" height="480" loading="eager">
+      </div>
+    {% endif %}
+  </div>
+</section>
+<hr class="w-rule">

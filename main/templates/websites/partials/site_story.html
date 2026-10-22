@@ -1,0 +1,19 @@
+{% load dw_tags %}
+{% if website.show_story and website.story %}
+  <section class="w-section w-section--alt">
+    <div class="w-wrap w-grid w-grid--2">
+      <div>
+        <p class="w-eyebrow">{% t "site_story_title" %}</p>
+        <h2 class="w-title">{% t "site_story_title" %}</h2>
+        <p class="w-lede" style="margin-left:0;">{{ website.story|linebreaksbr }}</p>
+      </div>
+      {% if website.introduction %}
+        <div class="w-card">
+          <p class="w-eyebrow" style="margin-top:0;">{% t "site_welcome_title" %}</p>
+          <p style="margin:0;">{{ website.introduction|linebreaksbr }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+  <hr class="w-rule">
+{% endif %}

@@ -1,0 +1,15 @@
+{% load dw_tags %}
+<nav class="dw-card p-3" aria-label="{% t 'site_cta_create' %}">
+  <p class="dw-eyebrow mb-2">{% t "site_cta_create" %}</p>
+  <ol class="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1">
+    {% for step in steps %}
+      <li class="lg:w-full">
+        <a href="{{ step.url }}"
+           class="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm {% if step.active %}bg-sindoor text-parchment{% else %}hover:bg-ochre/20{% endif %}">
+          <span class="dw-stat text-xs {% if step.active %}text-genda{% else %}text-ochre{% endif %}">{{ forloop.counter }}</span>
+          <span class="truncate">{{ step.label }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+</nav>
